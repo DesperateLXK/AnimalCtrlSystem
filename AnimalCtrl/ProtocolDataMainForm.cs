@@ -203,13 +203,13 @@ namespace AnimalCtrl
             return res;
         }
 
-        public void UpdateTargetGroup(ComboBox StimunChannel, CheckedListBox TargetGroup, byte[] serialSendData,  string targetGroupChoose)
+        public void UpdateTargetGroup(ComboBox StimunChannel, CheckedListBox TargetGroup, byte[] serialSendData,  ref string targetGroupChoose)
         {
 
             BitArray bitArray = new BitArray(8);        //创建一个8位的Bit位数组 因为群组一共有8个选项
             int tempInt16 = 0;
             byte temp = 0x00;
-            targetGroupChoose = "";//先清除
+            targetGroupChoose = " ";//先清除
             serialSendData[12] = Convert.ToByte(serialSendData[12] & temp);// 清零
             //遍历所有选项看是否选中 选择第一组的话 0x80
             for (int i = 0; i < TargetGroup.Items.Count; i++)

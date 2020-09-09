@@ -417,7 +417,7 @@ namespace AnimalCtrl
                 UpdatePulseNum(PulseValNum1, serialSendData1);//更新脉冲数
                 UpdatePulseInterval(PulseIntervalNum1, serialSendData1);//更新脉冲间隔
                 UpdateStimulationIntensity(StimunChannelNum1, StimulationIntensityText1, serialSendData1);//更刺激强度
-                UpdateTargetGroup(StimunChannelNum1, TargetGroupNum1, serialSendData1,  targetGroupChoose1);//更新目标群组
+                UpdateTargetGroup(StimunChannelNum1, TargetGroupNum1, serialSendData1,  ref targetGroupChoose1);//更新目标群组
                 UpdataCheckBit(serialSendData1);//更新校验位
                 serialPort.Write(serialSendData1, 0, serialSendData1.Length);//发送数据
             }
@@ -431,7 +431,7 @@ namespace AnimalCtrl
                 UpdatePulseNum(PulseValNum2, serialSendData2);
                 UpdatePulseInterval(PulseIntervalNum2, serialSendData2);
                 UpdateStimulationIntensity(StimunChannelNum2, StimulationIntensityText2, serialSendData2);
-                UpdateTargetGroup(StimunChannelNum2, TargetGroupNum2, serialSendData2,  targetGroupChoose2);
+                UpdateTargetGroup(StimunChannelNum2, TargetGroupNum2, serialSendData2,  ref targetGroupChoose2);
                 UpdataCheckBit(serialSendData2);
 
                 DelayMs(2000);//由于不知道什么时候那边处理结束，进行临时处理
@@ -448,7 +448,7 @@ namespace AnimalCtrl
                 UpdatePulseNum(PulseValNum3, serialSendData3);
                 UpdatePulseInterval(PulseIntervalNum3, serialSendData3);
                 UpdateStimulationIntensity(StimunChannelNum3, StimulationIntensityText3, serialSendData3);
-                UpdateTargetGroup(StimunChannelNum3, TargetGroupNum3, serialSendData3,  targetGroupChoose3);
+                UpdateTargetGroup(StimunChannelNum3, TargetGroupNum3, serialSendData3,  ref targetGroupChoose3);
                 UpdataCheckBit(serialSendData3);
                // DelayMs(1000);
                 serialPort.Write(serialSendData3, 0, serialSendData3.Length);
@@ -463,7 +463,7 @@ namespace AnimalCtrl
                 UpdatePulseNum(PulseValNum4, serialSendData4);
                 UpdatePulseInterval(PulseIntervalNum4, serialSendData4);
                 UpdateStimulationIntensity(StimunChannelNum4, StimulationIntensityText4, serialSendData4);
-                UpdateTargetGroup(StimunChannelNum4, TargetGroupNum4, serialSendData4,  targetGroupChoose4);
+                UpdateTargetGroup(StimunChannelNum4, TargetGroupNum4, serialSendData4,  ref targetGroupChoose4);
                 UpdataCheckBit(serialSendData4);
                 //DelayMs(200);
                 serialPort.Write(serialSendData4, 0, serialSendData4.Length);
