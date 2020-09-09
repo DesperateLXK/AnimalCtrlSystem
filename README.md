@@ -1,3 +1,3 @@
 # AnimalCtrlSystem
-It is update of AnimalCtrlSystem.
-It has new ui which quoted from an open source controler lib. 
+
+It first version of special control system.It communicates with hardware by serial. 
