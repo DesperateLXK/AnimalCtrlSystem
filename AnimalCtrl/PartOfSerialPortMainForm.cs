@@ -42,13 +42,21 @@ namespace AnimalCtrl
                     MessageBox.Show("本机没有串口！", "Error");
                     return;
                 }
-                //添加串口
-                foreach (string s in str)
+                //检测并添加串口
+                try
                 {
-                    PortChoose.Items.Add(s);
+                    foreach (string s in str)
+                    {
+                        PortChoose.Items.Add(s);
+                    }
+                    //设置默认串口选项
+                    PortChoose.SelectedIndex = 0;
                 }
-                //设置默认串口选项
-                PortChoose.SelectedIndex = 0;
+                catch {
+                    MessageBox.Show("本机没有可用串口！", "Error");
+                    this.Dispose();
+                    this.Close();
+                }
 
                 /*------波特率设置-------*/
                 string[] baudRate = { "9600", "19200", "38400", "57600", "115200" };
@@ -174,9 +182,7 @@ namespace AnimalCtrl
 
                     //打开串口
                     serialPort.Open();
-
                     //打开串口后设置将不再有效
-
                     PortChoose.Enabled = false;
                     BandRate.Enabled = false;
                     DataBit.Enabled = false;
