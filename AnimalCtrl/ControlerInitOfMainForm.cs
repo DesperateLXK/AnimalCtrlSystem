@@ -145,5 +145,30 @@ namespace AnimalCtrl
             DateTimer.Interval = 100; //更新间隔100毫秒
             DateTimer.Start();
         }
+        //心跳时间初始化
+        public void HeartActionInit()
+        {
+            HeartTimer.Interval = 5000;
+            //HeartTimer.Start();
+        }
+        //LED初始化
+        public void MyLedControlInit()
+        {
+            myLedControl1.LedStatus = false;
+            myLedControl2.LedStatus = false;
+            myLedControl3.LedStatus = false;
+            myLedControl4.LedStatus = false;
+            myLedControl5.LedStatus = false;
+            myLedControl6.LedStatus = false;
+            myLedControl7.LedStatus = false;
+            myLedControl8.LedStatus = false;
+        }
+
+        //各种定时器初始化
+        public void TimerInit()
+        {
+            ShowTimeLableInit();
+            HeartActionInit();
+        }
     }
 }

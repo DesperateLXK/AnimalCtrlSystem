@@ -20,6 +20,11 @@ namespace AnimalCtrl
         public MainForm()
         {
             InitializeComponent();
+            //解决窗体最小限制
+            Size newSize = new Size(1200, 810);
+            this.MaximumSize = this.MinimumSize = newSize;
+            this.Size = newSize;
+
             CheckForIllegalCrossThreadCalls = false;
         }
 
@@ -35,10 +40,12 @@ namespace AnimalCtrl
         {
             ComboBoxInit();  //下拉列表初始化
             CheckBoxInit();    //选择列表初始化
-            ShowTimeLableInit();//时间显示初始化
+            //ShowTimeLableInit();//时间显示初始化
+            TimerInit();//各种时间初始化
             TextBoxInit();  //文本框初始化
             ButtonInit(); //按钮初始化
             GroupBoxInit();//控件组初始化
+            MyLedControlInit();//LED初始化
         }
 
         //以下为各种控件引起的事件
@@ -363,5 +370,6 @@ namespace AnimalCtrl
         {
             serialPort.Write(DEBUG_testVal, 0, DEBUG_testVal.Length);
         }
+
     }
 }

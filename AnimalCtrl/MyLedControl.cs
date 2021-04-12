@@ -269,8 +269,8 @@ namespace AnimalCtrlSystem
         //如果有边框，那就画一个圆环
         if (isBorder)//参数这里用字段或属性都可以，如果用属性，程序要都走一些判断的代码
         {
-            //p = new Pen(this.BackColor, borderWidth);//使用背景色
-            p = new Pen(Color.Red, borderWidth);
+            p = new Pen(this.BackColor, borderWidth);//使用背景色
+            //p = new Pen(Color.Red, borderWidth);
             float x = 1 + gapWidth + borderWidth * 0.5f;
             rec = new RectangleF(x, x, LEDWidth - 2 * x, LEDWidth - 2 * x);
             g.DrawEllipse(p, rec);//画圆环
