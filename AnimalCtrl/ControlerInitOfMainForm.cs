@@ -98,7 +98,6 @@ namespace AnimalCtrl
             this.PosNegPulseNum4.ValueMember = "Key";
             this.PosNegPulseNum4.SelectedIndex = 2;
             //
-
         }
 
         //CheckBox的初始化
@@ -148,20 +147,25 @@ namespace AnimalCtrl
         //心跳时间初始化
         public void HeartActionInit()
         {
-            HeartTimer.Interval = 5000;
-            //HeartTimer.Start();
+            HeartTimer.Interval = 1000;
+            HeartTimer.Start();
         }
         //LED初始化
         public void MyLedControlInit()
         {
-            myLedControl1.LedStatus = false;
-            myLedControl2.LedStatus = false;
-            myLedControl3.LedStatus = false;
-            myLedControl4.LedStatus = false;
-            myLedControl5.LedStatus = false;
-            myLedControl6.LedStatus = false;
-            myLedControl7.LedStatus = false;
-            myLedControl8.LedStatus = false;
+            CtrlMyLedStatus(false);
+        }
+
+        public void CtrlMyLedStatus(bool ledStatus)
+        {
+            myLedControl1.LedStatus = ledStatus;
+            myLedControl2.LedStatus = ledStatus;
+            myLedControl3.LedStatus = ledStatus;
+            myLedControl4.LedStatus = ledStatus;
+            myLedControl5.LedStatus = ledStatus;
+            myLedControl6.LedStatus = ledStatus;
+            myLedControl7.LedStatus = ledStatus;
+            myLedControl8.LedStatus = ledStatus;
         }
 
         //各种定时器初始化

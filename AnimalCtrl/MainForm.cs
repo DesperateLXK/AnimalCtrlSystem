@@ -365,11 +365,33 @@ namespace AnimalCtrl
                 e.Cancel = true;
             }
         }
-        public byte[] DEBUG_testVal = { 0XAA, 0XEE, 0X01, 0X02, 0X03, 0X04, 0X05, 0X06, 0X07, 0X08, 0X09, 0X10, 0X11, 0X12, 0X13, 0XFF };
+
+        public byte[] DEBUG_testVal = { 0XAA, 0XEE, 0XCC, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X80, 0X00, 0XE4, 0XFF };
+        public byte[] DEBUG_testVal2 = { 0XAA, 0XEE, 0XCC, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X40, 0X00, 0XA4, 0XFF };
+
         private void button2_Click(object sender, EventArgs e)
         {
             serialPort.Write(DEBUG_testVal, 0, DEBUG_testVal.Length);
         }
 
+        //
+        public byte[] serialSendHeartData = { 0XBB, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0XFF, 0X00, 0XBA, 0X00 };
+        private void HeartTimer_Tick(object sender, EventArgs e)
+        {
+            //如果开启了
+            if (serialPort.IsOpen)
+            {
+                CtrlMyLedStatus(false);
+                DelayMs(10);
+                serialPort.Write(serialSendHeartData, 0, serialSendHeartData.Length);//发送数据
+                //serialPort.Write(DEBUG_testVal, 0, DEBUG_testVal.Length);//发送数据
+                //serialPort.Write(DEBUG_testVal2, 0, DEBUG_testVal2.Length);//发送数据
+                HeartTimer.Interval = 3000;
+            }
+            else {
+                CtrlMyLedStatus(false);
+                HeartTimer.Interval = 100;
+            }
+        }
     }
 }

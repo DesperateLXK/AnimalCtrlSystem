@@ -397,7 +397,7 @@ namespace AnimalCtrl
                     serialPort.DiscardInBuffer(); //清空SerialPort控件的Buffer 
                 }
                 // byte[] DEBUG_testVal = { 0XAA, 0XEE, 0X01, 0X02, 0X03, 0X04, 0X05, 0X06, 0X07, 0X08, 0X09, 0X10, 0X11, 0X12, 0X13, 0XFF };
-                else //接收格式为HEX
+                else //接收格式为HEX 这个是专用协议 不是通用的接收
                 {
                     
                     if (e.EventType == System.IO.Ports.SerialData.Eof) //防止多次进入回调打乱缓冲区
@@ -423,13 +423,31 @@ namespace AnimalCtrl
                                 byte[] ReceiveBytes = new byte[serialFramesLen];
                                 serialBuffer.CopyTo(0, ReceiveBytes, 0, serialFramesLen);
 
-                                if (serialFramesCheckBit != ReceiveBytes[serialFramesLen - 1])
+                                if (serialFramesCheckBit != ReceiveBytes[serialFramesLen - 1])//判断帧尾
                                 {
                                     serialBuffer.RemoveRange(0, serialFramesLen);
                                     MessageBox.Show("数据包不正确！");
                                     continue;
                                 }
+
+                                //判断数据校验位是否正确
+                                //如果不正确 移除所有数据
+                                if (!isDataCheckBitSuccess(ReceiveBytes))
+                                {
+                                    serialBuffer.RemoveRange(0, serialFramesLen);
+                                    MessageBox.Show("数据不正确！");
+                                    continue;
+                                }
+
                                 //receiveBytes 就是完整可用的一帧数据包
+                                //接下来判断收到的数据
+                                try
+                                {
+                                    HandleRecBuff(ReceiveBytes);
+                                }
+                                catch {
+                                    MessageBox.Show("数据处理异常！");
+                                }
 
                                 str = ByteToString(ReceiveBytes);
                                 PortRecTextBox.Text += string.Format("{0}\r\n", dateTimeNow);
@@ -442,7 +460,7 @@ namespace AnimalCtrl
                             }
 
                         }
-                        DelayMs(5);
+                        DelayMs(10);
                        
                     }
                     catch (System.Exception ex)
@@ -457,9 +475,78 @@ namespace AnimalCtrl
                 MessageBox.Show("请打开某个串口", "错误提示");
             }
         }
+        //数据位中的检验位判断
+        public bool isDataCheckBitSuccess(byte[] ReceiveBytes)
+        {
+            bool SUCCESS = true;
+            bool FAILURE = false;   
+            byte tempBIT = 0x00;
 
+            int tempInt16 = 0;
+            for (int i = 0; i < ReceiveBytes.Length - 2; i++)
+            {
+                tempInt16 += Convert.ToInt16(ReceiveBytes[i]);
+            }
+            tempInt16 = tempInt16 % 256;
+            tempBIT = Convert.ToByte(tempInt16 & 0x00FF);
+            //倒数第二位
+            if (tempBIT == ReceiveBytes[14])
+            {
+                return SUCCESS;
+            }
+            else
+            {
+                return FAILURE;
+            }
+            
+        }
+        //判断设备编号 并且做相应的操作
+        public void DecideDiviceNum(byte numBit)
+        {
+            switch (numBit)
+            {
+                case 0X80:
+                    myLedControl1.LedStatus = true;
+                    break;
+                case 0X40:
+                    myLedControl2.LedStatus = true;
+                    break;
+                case 0X20:
+                    myLedControl3.LedStatus = true;
+                    break;
+                case 0X10:
+                    myLedControl4.LedStatus = true;
+                    break;
+                case 0X08:
+                    myLedControl5.LedStatus = true;
+                    break;
+                case 0X04:
+                    myLedControl6.LedStatus = true;
+                    break;
+                case 0X02:
+                    myLedControl7.LedStatus = true;
+                    break;
+                case 0X01:
+                    myLedControl8.LedStatus = true;
+                    break;
 
+            }
+        }
 
+        //处理接受信息
+        public void HandleRecBuff(byte[] ReceiveBytes)
+        {
+            if (ReceiveBytes[2] == 0XCC) //判断返回心跳
+            {
+                byte tempBit = ReceiveBytes[12];
+                DecideDiviceNum(tempBit);
+            }
+            else if (ReceiveBytes[2] == 0XDD) //返回刺激成功
+            {
+
+            }
+        }
+        
         //public void DataReceivedByte(object sender, SerialDataReceivedEventArgs e)
         //{
 

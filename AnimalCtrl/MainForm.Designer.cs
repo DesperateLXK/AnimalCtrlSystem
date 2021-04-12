@@ -286,7 +286,7 @@
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(205, 20);
             this.label35.TabIndex = 85;
-            this.label35.Text = "(绿色为已连接\\红色为未连接)";
+            this.label35.Text = "(绿色为已连接\\灰色为未连接)";
             // 
             // label34
             // 
@@ -1435,7 +1435,7 @@
             this.SendGroupBox.Controls.Add(this.groupBox7);
             this.SendGroupBox.Controls.Add(this.SendDataButton);
             this.SendGroupBox.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.SendGroupBox.Location = new System.Drawing.Point(1056, 773);
+            this.SendGroupBox.Location = new System.Drawing.Point(1048, 773);
             this.SendGroupBox.Margin = new System.Windows.Forms.Padding(4);
             this.SendGroupBox.Name = "SendGroupBox";
             this.SendGroupBox.Padding = new System.Windows.Forms.Padding(4);
@@ -1898,6 +1898,7 @@
             // HeartTimer
             // 
             this.HeartTimer.Interval = 5000;
+            this.HeartTimer.Tick += new System.EventHandler(this.HeartTimer_Tick);
             // 
             // MainForm
             // 
