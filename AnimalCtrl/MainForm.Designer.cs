@@ -1535,7 +1535,7 @@
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(177, 40);
             this.label24.TabIndex = 0;
-            this.label24.Text = "Release Date: 2020.9.9 Version: 1.3";
+            this.label24.Text = "Release Date: 2020.9.9 Version: 1.4";
             // 
             // label16
             // 
@@ -1600,7 +1600,7 @@
             this.groupBox10.Size = new System.Drawing.Size(406, 317);
             this.groupBox10.TabIndex = 4;
             this.groupBox10.TabStop = false;
-            this.groupBox10.Text = "串口接收数据显示";
+            this.groupBox10.Text = "接收协议数据显示";
             // 
             // CleanSerialRecvTextBoxButton
             // 

@@ -137,26 +137,13 @@ namespace AnimalCtrl
             serialSendData[10] = Convert.ToByte(serialSendData[10] & temp);//清零
             serialSendData[11] = Convert.ToByte(serialSendData[11] & temp);//清零
 
-            if ((StimunChannel.SelectedIndex == 0) || (StimunChannel.SelectedIndex == 1))//1通道2通道
+            if ((StimunChannel.SelectedIndex == 0) || (StimunChannel.SelectedIndex == 1) || (StimunChannel.SelectedIndex == 2) || (StimunChannel.SelectedIndex == 3))//1通道2通道34通道
             {
                 serialSendData[6] = Convert.ToByte((tempInt16 >> 8) & 0x00FF);//高位
                 serialSendData[7] = Convert.ToByte(tempInt16 & 0x00FF); //低位
-            }
-            //else if (StimunChannel.SelectedIndex == 1)//2通道
-            //{
-            //    serialSendData[6] = Convert.ToByte((tempInt16 >> 8) & 0x00FF);//高位
-            //    serialSendData[7] = Convert.ToByte(tempInt16 & 0x00FF); //低位
-            //}
-            else if ((StimunChannel.SelectedIndex == 2) || (StimunChannel.SelectedIndex == 3))//3通道
-            {
                 serialSendData[10] = Convert.ToByte((tempInt16 >> 8) & 0x00FF);//高位
                 serialSendData[11] = Convert.ToByte(tempInt16 & 0x00FF); //低位
             }
-            //else if (StimunChannel.SelectedIndex == 3)//4通道
-            //{
-            //    serialSendData[10] = Convert.ToByte((tempInt16 >> 8) & 0x00FF);//高位
-            //    serialSendData[11] = Convert.ToByte(tempInt16 & 0x00FF); //低位
-            //}
             else if ((StimunChannel.SelectedIndex == 4) || (StimunChannel.SelectedIndex == 5) || (StimunChannel.SelectedIndex == 6) || (StimunChannel.SelectedIndex == 7))//1-3 1-4 2-3 2-4
             {
                 serialSendData[6] = Convert.ToByte((tempInt16 >> 8) & 0x00FF);//高位
@@ -164,27 +151,6 @@ namespace AnimalCtrl
                 serialSendData[10] = Convert.ToByte((tempInt16 >> 8) & 0x00FF);//高位
                 serialSendData[11] = Convert.ToByte(tempInt16 & 0x00FF); //低位
             }
-            //else if (StimunChannel.SelectedIndex == 5)//1-4
-            //{
-            //    serialSendData[6] = Convert.ToByte((tempInt16 >> 8) & 0x00FF);//高位
-            //    serialSendData[7] = Convert.ToByte(tempInt16 & 0x00FF); //低位
-            //    serialSendData[10] = Convert.ToByte((tempInt16 >> 8) & 0x00FF);//高位
-            //    serialSendData[11] = Convert.ToByte(tempInt16 & 0x00FF); //低位
-            //}
-            //else if (StimunChannel.SelectedIndex == 6)//2-3
-            //{
-            //    serialSendData[6] = Convert.ToByte((tempInt16 >> 8) & 0x00FF);//高位
-            //    serialSendData[7] = Convert.ToByte(tempInt16 & 0x00FF); //低位
-            //    serialSendData[10] = Convert.ToByte((tempInt16 >> 8) & 0x00FF);//高位
-            //    serialSendData[11] = Convert.ToByte(tempInt16 & 0x00FF); //低位
-            //}
-            //else if (StimunChannel.SelectedIndex == 7)//2-4
-            //{
-            //    serialSendData[6] = Convert.ToByte((tempInt16 >> 8) & 0x00FF);//高位
-            //    serialSendData[7] = Convert.ToByte(tempInt16 & 0x00FF); //低位
-            //    serialSendData[10] = Convert.ToByte((tempInt16 >> 8) & 0x00FF);//高位
-            //    serialSendData[11] = Convert.ToByte(tempInt16 & 0x00FF); //低位
-            //}
         }
 
         //位型转化为Int型
