@@ -188,7 +188,11 @@ namespace AnimalCtrl
             tempInt16 = BitToInt(bitArray);
             serialSendData[12] = Convert.ToByte(tempInt16 & 0x00FF); //只需要取低位
         }
-
+        //serialSendData[13] 刺激编号
+        public void UpdateStimTimesBit(byte[] serialSendData, byte stimulateTimes)
+        {
+            serialSendData[13] = stimulateTimes;
+        }
         //serialSendData[14] 所有和加起来除以256的余数
         public void UpdataCheckBit(byte[] serialSendData)
         {

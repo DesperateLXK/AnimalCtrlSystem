@@ -338,7 +338,7 @@ namespace AnimalCtrl
             return bytes;
         }
 
-        //
+        //Byte转化为string
 
         public static string ByteToString(byte[] bytes)
         {
@@ -353,8 +353,8 @@ namespace AnimalCtrl
 
         //临时缓冲list
         List<byte> serialBuffer = new List<byte>(4096);
+        byte[] serialFramesHeadBit = { 0XAA, 0XEE }; //数据帧头 两位
         byte serialFramesCheckBit = 0XFF; //数据帧尾
-        byte[] serialFramesHeadBit = {0XAA, 0XEE }; //数据帧头 两位保险
         int dataLen = 13; //数据位 共13位 从ReceiveBytes的第3位到第15位
         int serialFramesCheckNum = 3; //帧数据位数
         int serialFramesLen = 16;
@@ -368,9 +368,6 @@ namespace AnimalCtrl
                 //输出当前时间
                 DateTime dateTimeNow = DateTime.Now;
                 dateTimeNow.GetDateTimeFormats();
-                //PortRecTextBox.Text += string.Format("{0}\r\n", dateTimeNow);
-                //dateTimeNow.GetDateTimeFormats('f')[0].ToString() + "\r\n";
-                //PortRecTextBox.ForeColor = Color.Red;    //改变字体的颜色
 
                 if (RecRadioButtonASCII.Checked == true) //接收格式为ASCII
                 {
@@ -396,7 +393,6 @@ namespace AnimalCtrl
                     PortRecTextBox.ScrollToCaret();//滚动到光标处
                     serialPort.DiscardInBuffer(); //清空SerialPort控件的Buffer 
                 }
-                // byte[] DEBUG_testVal = { 0XAA, 0XEE, 0X01, 0X02, 0X03, 0X04, 0X05, 0X06, 0X07, 0X08, 0X09, 0X10, 0X11, 0X12, 0X13, 0XFF };
                 else //接收格式为HEX 这个是专用协议 不是通用的接收
                 {
                     
@@ -426,7 +422,7 @@ namespace AnimalCtrl
                                 if (serialFramesCheckBit != ReceiveBytes[serialFramesLen - 1])//判断帧尾
                                 {
                                     serialBuffer.RemoveRange(0, serialFramesLen);
-                                    MessageBox.Show("数据包不正确！");
+                                    MessageBox.Show("数据包长度不正确！");
                                     continue;
                                 }
 
@@ -435,12 +431,12 @@ namespace AnimalCtrl
                                 if (!isDataCheckBitSuccess(ReceiveBytes))
                                 {
                                     serialBuffer.RemoveRange(0, serialFramesLen);
-                                    MessageBox.Show("数据不正确！");
+                                    MessageBox.Show("数据内容不正确！");
                                     continue;
                                 }
 
                                 //receiveBytes 就是完整可用的一帧数据包
-                                //接下来判断收到的数据
+                                //接下来处理收到的数据
                                 try
                                 {
                                     HandleRecBuff(ReceiveBytes);
@@ -449,9 +445,11 @@ namespace AnimalCtrl
                                     MessageBox.Show("数据处理异常！");
                                 }
 
-                                str = ByteToString(ReceiveBytes);
-                                PortRecTextBox.Text += string.Format("{0}\r\n", dateTimeNow);
-                                PortRecTextBox.AppendText(str + '\n');
+                                //注释语句为调试用
+                                //str = ByteToString(ReceiveBytes);
+                                //PortRecTextBox.Text += string.Format("{0}\r\n", dateTimeNow);
+                                //PortRecTextBox.AppendText(str + '\n');
+
                                 serialBuffer.RemoveRange(0, serialFramesLen);
                             }
                             else //帧头不正确时，记得清除
@@ -501,7 +499,7 @@ namespace AnimalCtrl
             
         }
         //判断设备编号 并且做相应的操作
-        public void DecideDiviceNum(byte numBit)
+        public void HeartDecideDiviceNum(byte numBit)
         {
             switch (numBit)
             {
@@ -532,21 +530,102 @@ namespace AnimalCtrl
 
             }
         }
+        //
+        //        表示通道
+        //1—1通道；
+        //2—1-3通道；
+        //3—3通道；
+        //4—2通道； 
+        //5—2-3通道；
+        //6—4通道；
+        //8—1-4通道；
+        //9—2-4通道
+        public void StimulateSuccessMessageHandle(byte[] tempReceiveBytes, ref string stimuSuccessMessage)
+        {
+            stimuSuccessMessage = string.Empty;
+            string devNumStr = "";
+            string stimuNumStr = "刺激编号：" + (Convert.ToInt16(tempReceiveBytes[13]) + 1).ToString() + "\n"; //刺激编号
+            string channelNumStr = "";
+
+            byte tempChannelBit = (byte) (tempReceiveBytes[3] & 0X0F);//只取低位
+
+            switch (tempChannelBit) //通道编号
+            {
+                case 0x01:
+                    channelNumStr = "1通道 ";
+                    break;
+                case 0x02:
+                    channelNumStr = "1-3通道 ";
+                    break;
+                case 0x03:
+                    channelNumStr = "3通道 ";
+                    break;
+                case 0x04:
+                    channelNumStr = "2通道 ";
+                    break;
+                case 0x05:
+                    channelNumStr = "2-3通道 ";
+                    break;
+                case 0x06:
+                    channelNumStr = "4通道 ";
+                    break;
+                case 0x08:
+                    channelNumStr = "1-4通道 ";
+                    break;
+                case 0x09:
+                    channelNumStr = "2-4通道 ";
+                    break;
+
+            }
+            switch (tempReceiveBytes[12])//设备编号
+            {
+                //1号设备
+                case 0X80:
+                    devNumStr = "1号设备 ";
+                    break;
+                case 0X40:
+                    devNumStr = "2号设备 ";
+                    break;
+                case 0X20:
+                    devNumStr = "3号设备 ";
+                    break;
+                case 0X10:
+                    devNumStr = "4号设备 ";
+                    break;
+                case 0X08:
+                    devNumStr = "5号设备 ";
+                    break;
+                case 0X04:
+                    devNumStr = "6号设备 ";
+                    break;
+                case 0X02:
+                    devNumStr = "7号设备 ";
+                    break;
+                case 0X01:
+                    devNumStr = "8号设备 ";
+                    break;
+            }
+            stimuSuccessMessage = stimuNumStr + devNumStr + channelNumStr + "刺激成功\n";
+        }
 
         //处理接受信息
+        string  stimuSuccessMessage = " ";
         public void HandleRecBuff(byte[] ReceiveBytes)
         {
             if (ReceiveBytes[2] == 0XCC) //判断返回心跳
             {
                 byte tempBit = ReceiveBytes[12];
-                DecideDiviceNum(tempBit);
+                HeartDecideDiviceNum(tempBit);
             }
             else if (ReceiveBytes[2] == 0XDD) //返回刺激成功
             {
-
+                StimulateSuccessMessageHandle(ReceiveBytes, ref stimuSuccessMessage);
+                PortRecTextBox.ForeColor = Color.Green;
+                PortRecTextBox.AppendText(stimuSuccessMessage);
             }
         }
-        
+
+        #region//原本的数据接收函数 可以接收普通的HEX和ASCII
         //public void DataReceivedByte(object sender, SerialDataReceivedEventArgs e)
         //{
 
@@ -609,6 +688,7 @@ namespace AnimalCtrl
         //        MessageBox.Show("请打开某个串口", "错误提示");
         //    }
         //}
+        #endregion
 
         public static void DelayMs(int milliSecond)
         {
@@ -619,9 +699,12 @@ namespace AnimalCtrl
             }
         }
 
+        //全局变量刺激次数
+        public byte stimulateTimes = 0x00;
+
         public void SerialDataSendByte()
         {
-            //String strSend = serialSendData;//发送数据
+            #region//String strSend = serialSendData;// 
             //if (SendRadioButtonASCII.Checked == true)//以字符串 ASCII 发送
             //{
             //    serialPort.WriteLine(strSend);//发送一行数据 
@@ -639,69 +722,87 @@ namespace AnimalCtrl
             //        serialPort.WriteLine(hexIutput);
             //    }
             //}
-            if (IsOpenCheckBoxNum1.Checked == true)
+            #endregion
+            if (SendRadioButtonASCII.Checked == true)//以字符串 ASCII 发送
             {
-                UpdateChannal(StimunChannelNum1, serialSendData1);  //更新通道
-                UpdatePosAndNeg(PosNegPulseNum1, serialSendData1);//更新正负极
-                UpdatePulseLength(PulseLengthNum1, serialSendData1);//更新脉冲长度
-                UpdateFrequency(Frequency1, serialSendData1);//更新频率
-                UpdatePwm(PwmNum1, serialSendData1);//更新占空比
-                UpdatePulseNum(PulseValNum1, serialSendData1);//更新脉冲数
-                UpdatePulseInterval(PulseIntervalNum1, serialSendData1);//更新脉冲间隔
-                UpdateStimulationIntensity(StimunChannelNum1, StimulationIntensityText1, serialSendData1);//更刺激强度
-                UpdateTargetGroup(StimunChannelNum1, TargetGroupNum1, serialSendData1,  ref targetGroupChoose1);//更新目标群组
-                UpdataCheckBit(serialSendData1);//更新校验位
-                serialPort.Write(serialSendData1, 0, serialSendData1.Length);//发送数据
+                MessageBox.Show("ASCII功能暂时不可用");
+                SendRadioButtonHEX.Checked = true;
+                SendRadioButtonASCII.Checked = false;
             }
-            if (IsOpenCheckBoxNum2.Checked == true)
+            else
             {
-                UpdateChannal(StimunChannelNum2, serialSendData2);
-                UpdatePosAndNeg(PosNegPulseNum2, serialSendData2);
-                UpdatePulseLength(PulseLengthNum2, serialSendData2);
-                UpdateFrequency(Frequency2, serialSendData2);
-                UpdatePwm(PwmNum2, serialSendData2);
-                UpdatePulseNum(PulseValNum2, serialSendData2);
-                UpdatePulseInterval(PulseIntervalNum2, serialSendData2);
-                UpdateStimulationIntensity(StimunChannelNum2, StimulationIntensityText2, serialSendData2);
-                UpdateTargetGroup(StimunChannelNum2, TargetGroupNum2, serialSendData2,  ref targetGroupChoose2);
-                UpdataCheckBit(serialSendData2);
 
-                //DelayMs(2000);//由于不知道什么时候那边处理结束，进行临时处理
-                serialPort.Write(serialSendData2, 0, serialSendData2.Length);
+                if (IsOpenCheckBoxNum1.Checked == true)
+                {
+                    UpdateChannal(StimunChannelNum1, serialSendData1);  //更新通道
+                    UpdatePosAndNeg(PosNegPulseNum1, serialSendData1);//更新正负极
+                    UpdatePulseLength(PulseLengthNum1, serialSendData1);//更新脉冲长度
+                    UpdateFrequency(Frequency1, serialSendData1);//更新频率
+                    UpdatePwm(PwmNum1, serialSendData1);//更新占空比
+                    UpdatePulseNum(PulseValNum1, serialSendData1);//更新脉冲数
+                    UpdatePulseInterval(PulseIntervalNum1, serialSendData1);//更新脉冲间隔
+                    UpdateStimulationIntensity(StimunChannelNum1, StimulationIntensityText1, serialSendData1);//更刺激强度
+                    UpdateTargetGroup(StimunChannelNum1, TargetGroupNum1, serialSendData1, ref targetGroupChoose1);//更新目标群组
+                    UpdateStimTimesBit(serialSendData1, stimulateTimes);//更新发送编号
+                    UpdataCheckBit(serialSendData1);//更新校验位
+                    serialPort.Write(serialSendData1, 0, serialSendData1.Length);//发送数据
+                }
+                if (IsOpenCheckBoxNum2.Checked == true)
+                {
+                    UpdateChannal(StimunChannelNum2, serialSendData2);
+                    UpdatePosAndNeg(PosNegPulseNum2, serialSendData2);
+                    UpdatePulseLength(PulseLengthNum2, serialSendData2);
+                    UpdateFrequency(Frequency2, serialSendData2);
+                    UpdatePwm(PwmNum2, serialSendData2);
+                    UpdatePulseNum(PulseValNum2, serialSendData2);
+                    UpdatePulseInterval(PulseIntervalNum2, serialSendData2);
+                    UpdateStimulationIntensity(StimunChannelNum2, StimulationIntensityText2, serialSendData2);
+                    UpdateTargetGroup(StimunChannelNum2, TargetGroupNum2, serialSendData2, ref targetGroupChoose2);
+                    UpdateStimTimesBit(serialSendData2, stimulateTimes);//更新发送编号
+                    UpdataCheckBit(serialSendData2);
+                    serialPort.Write(serialSendData2, 0, serialSendData2.Length);
+                }
+                if (IsOpenCheckBoxNum3.Checked == true)
+                {
+
+                    UpdateChannal(StimunChannelNum3, serialSendData3);
+                    UpdatePosAndNeg(PosNegPulseNum3, serialSendData3);
+                    UpdatePulseLength(PulseLengthNum3, serialSendData3);
+                    UpdateFrequency(Frequency3, serialSendData3);
+                    UpdatePwm(PwmNum3, serialSendData3);
+                    UpdatePulseNum(PulseValNum3, serialSendData3);
+                    UpdatePulseInterval(PulseIntervalNum3, serialSendData3);
+                    UpdateStimulationIntensity(StimunChannelNum3, StimulationIntensityText3, serialSendData3);
+                    UpdateTargetGroup(StimunChannelNum3, TargetGroupNum3, serialSendData3, ref targetGroupChoose3);
+                    UpdateStimTimesBit(serialSendData3, stimulateTimes);//更新发送编号
+                    UpdataCheckBit(serialSendData3);
+                    serialPort.Write(serialSendData3, 0, serialSendData3.Length);
+                }
+                if (IsOpenCheckBoxNum4.Checked == true)
+                {
+                    UpdateChannal(StimunChannelNum4, serialSendData4);
+                    UpdatePosAndNeg(PosNegPulseNum4, serialSendData4);
+                    UpdatePulseLength(PulseLengthNum4, serialSendData4);
+                    UpdateFrequency(Frequency4, serialSendData4);
+                    UpdatePwm(PwmNum4, serialSendData4);
+                    UpdatePulseNum(PulseValNum4, serialSendData4);
+                    UpdatePulseInterval(PulseIntervalNum4, serialSendData4);
+                    UpdateStimulationIntensity(StimunChannelNum4, StimulationIntensityText4, serialSendData4);
+                    UpdateTargetGroup(StimunChannelNum4, TargetGroupNum4, serialSendData4, ref targetGroupChoose4);
+                    UpdateStimTimesBit(serialSendData4, stimulateTimes);//更新发送编号
+                    UpdataCheckBit(serialSendData4);
+                    serialPort.Write(serialSendData4, 0, serialSendData4.Length);
+                }
+
+                stimulateTimes++;
+                if (stimulateTimes == 0XFF)
+                {
+                    stimulateTimes = 0X00;
+                }
             }
-            if (IsOpenCheckBoxNum3.Checked == true)
-            {
-                
-                UpdateChannal(StimunChannelNum3, serialSendData3);
-                UpdatePosAndNeg(PosNegPulseNum3, serialSendData3);
-                UpdatePulseLength(PulseLengthNum3, serialSendData3);
-                UpdateFrequency(Frequency3, serialSendData3);
-                UpdatePwm(PwmNum3, serialSendData3);
-                UpdatePulseNum(PulseValNum3, serialSendData3);
-                UpdatePulseInterval(PulseIntervalNum3, serialSendData3);
-                UpdateStimulationIntensity(StimunChannelNum3, StimulationIntensityText3, serialSendData3);
-                UpdateTargetGroup(StimunChannelNum3, TargetGroupNum3, serialSendData3,  ref targetGroupChoose3);
-                UpdataCheckBit(serialSendData3);
-               // DelayMs(1000);
-                serialPort.Write(serialSendData3, 0, serialSendData3.Length);
-            }
-            if (IsOpenCheckBoxNum4.Checked == true)
-            {
-                UpdateChannal(StimunChannelNum4, serialSendData4);
-                UpdatePosAndNeg(PosNegPulseNum4, serialSendData4);
-                UpdatePulseLength(PulseLengthNum4, serialSendData4);
-                UpdateFrequency(Frequency4, serialSendData4);
-                UpdatePwm(PwmNum4, serialSendData4);
-                UpdatePulseNum(PulseValNum4, serialSendData4);
-                UpdatePulseInterval(PulseIntervalNum4, serialSendData4);
-                UpdateStimulationIntensity(StimunChannelNum4, StimulationIntensityText4, serialSendData4);
-                UpdateTargetGroup(StimunChannelNum4, TargetGroupNum4, serialSendData4,  ref targetGroupChoose4);
-                UpdataCheckBit(serialSendData4);
-                //DelayMs(200);
-                serialPort.Write(serialSendData4, 0, serialSendData4.Length);
-            }
+           
         }
-
+        #region //初试数据接收函数
         //public string recv;
         //public void DataReceivedByte(object sender, SerialDataReceivedEventArgs e)
         //{
@@ -729,6 +830,7 @@ namespace AnimalCtrl
         //        MessageBox.Show("请打开某个串口", "错误提示");
         //    }
         //}
+        #endregion
     }
 }
 

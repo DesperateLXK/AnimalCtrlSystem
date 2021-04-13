@@ -42,15 +42,7 @@
             this.label28 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
-            this.myLedControl8 = new AnimalCtrlSystem.MyLedControl();
-            this.myLedControl7 = new AnimalCtrlSystem.MyLedControl();
-            this.myLedControl2 = new AnimalCtrlSystem.MyLedControl();
-            this.myLedControl1 = new AnimalCtrlSystem.MyLedControl();
-            this.myLedControl6 = new AnimalCtrlSystem.MyLedControl();
             this.label25 = new System.Windows.Forms.Label();
-            this.myLedControl3 = new AnimalCtrlSystem.MyLedControl();
-            this.myLedControl5 = new AnimalCtrlSystem.MyLedControl();
-            this.myLedControl4 = new AnimalCtrlSystem.MyLedControl();
             this.Frequency4 = new System.Windows.Forms.NumericUpDown();
             this.Frequency3 = new System.Windows.Forms.NumericUpDown();
             this.Frequency2 = new System.Windows.Forms.NumericUpDown();
@@ -124,6 +116,7 @@
             this.TimeShowLable = new System.Windows.Forms.Label();
             this.DateTimer = new System.Windows.Forms.Timer(this.components);
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.DebugButton = new System.Windows.Forms.Button();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.CleanSerialRecvTextBoxButton = new System.Windows.Forms.Button();
             this.PortRecTextBox = new System.Windows.Forms.RichTextBox();
@@ -149,8 +142,15 @@
             this.label18 = new System.Windows.Forms.Label();
             this.SerialCheckBox = new System.Windows.Forms.CheckBox();
             this.IntervalSendTimer = new System.Windows.Forms.Timer(this.components);
-            this.button2 = new System.Windows.Forms.Button();
             this.HeartTimer = new System.Windows.Forms.Timer(this.components);
+            this.myLedControl8 = new AnimalCtrlSystem.MyLedControl();
+            this.myLedControl7 = new AnimalCtrlSystem.MyLedControl();
+            this.myLedControl2 = new AnimalCtrlSystem.MyLedControl();
+            this.myLedControl1 = new AnimalCtrlSystem.MyLedControl();
+            this.myLedControl6 = new AnimalCtrlSystem.MyLedControl();
+            this.myLedControl3 = new AnimalCtrlSystem.MyLedControl();
+            this.myLedControl5 = new AnimalCtrlSystem.MyLedControl();
+            this.myLedControl4 = new AnimalCtrlSystem.MyLedControl();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Frequency4)).BeginInit();
@@ -369,116 +369,6 @@
             this.label26.TabIndex = 76;
             this.label26.Text = "1号";
             // 
-            // myLedControl8
-            // 
-            this.myLedControl8.BorderWidth = 1;
-            this.myLedControl8.CenterColor = System.Drawing.Color.White;
-            this.myLedControl8.FlashInterval = 500;
-            this.myLedControl8.GapWidth = 1;
-            this.myLedControl8.IsBorder = true;
-            this.myLedControl8.IsFlash = false;
-            this.myLedControl8.IsHighLight = true;
-            this.myLedControl8.LampColor = new System.Drawing.Color[] {
-        System.Drawing.Color.Green,
-        System.Drawing.Color.Yellow};
-            this.myLedControl8.LedColor = System.Drawing.Color.MediumSeaGreen;
-            this.myLedControl8.LedFalseColor = System.Drawing.Color.Silver;
-            this.myLedControl8.LedStatus = true;
-            this.myLedControl8.LedTrueColor = System.Drawing.Color.MediumSeaGreen;
-            this.myLedControl8.Location = new System.Drawing.Point(536, 71);
-            this.myLedControl8.Margin = new System.Windows.Forms.Padding(0, 12, 34, 12);
-            this.myLedControl8.Name = "myLedControl8";
-            this.myLedControl8.Size = new System.Drawing.Size(22, 27);
-            this.myLedControl8.TabIndex = 75;
-            // 
-            // myLedControl7
-            // 
-            this.myLedControl7.BorderWidth = 1;
-            this.myLedControl7.CenterColor = System.Drawing.Color.White;
-            this.myLedControl7.FlashInterval = 500;
-            this.myLedControl7.GapWidth = 1;
-            this.myLedControl7.IsBorder = true;
-            this.myLedControl7.IsFlash = false;
-            this.myLedControl7.IsHighLight = true;
-            this.myLedControl7.LampColor = new System.Drawing.Color[] {
-        System.Drawing.Color.Green,
-        System.Drawing.Color.Yellow};
-            this.myLedControl7.LedColor = System.Drawing.Color.MediumSeaGreen;
-            this.myLedControl7.LedFalseColor = System.Drawing.Color.Silver;
-            this.myLedControl7.LedStatus = true;
-            this.myLedControl7.LedTrueColor = System.Drawing.Color.MediumSeaGreen;
-            this.myLedControl7.Location = new System.Drawing.Point(481, 71);
-            this.myLedControl7.Margin = new System.Windows.Forms.Padding(0, 9, 34, 9);
-            this.myLedControl7.Name = "myLedControl7";
-            this.myLedControl7.Size = new System.Drawing.Size(22, 27);
-            this.myLedControl7.TabIndex = 74;
-            // 
-            // myLedControl2
-            // 
-            this.myLedControl2.BorderWidth = 1;
-            this.myLedControl2.CenterColor = System.Drawing.Color.White;
-            this.myLedControl2.FlashInterval = 500;
-            this.myLedControl2.GapWidth = 1;
-            this.myLedControl2.IsBorder = true;
-            this.myLedControl2.IsFlash = false;
-            this.myLedControl2.IsHighLight = true;
-            this.myLedControl2.LampColor = new System.Drawing.Color[] {
-        System.Drawing.Color.Green,
-        System.Drawing.Color.Yellow};
-            this.myLedControl2.LedColor = System.Drawing.Color.MediumSeaGreen;
-            this.myLedControl2.LedFalseColor = System.Drawing.Color.Silver;
-            this.myLedControl2.LedStatus = true;
-            this.myLedControl2.LedTrueColor = System.Drawing.Color.MediumSeaGreen;
-            this.myLedControl2.Location = new System.Drawing.Point(199, 71);
-            this.myLedControl2.Margin = new System.Windows.Forms.Padding(0, 9, 34, 9);
-            this.myLedControl2.Name = "myLedControl2";
-            this.myLedControl2.Size = new System.Drawing.Size(22, 27);
-            this.myLedControl2.TabIndex = 69;
-            // 
-            // myLedControl1
-            // 
-            this.myLedControl1.BorderWidth = 1;
-            this.myLedControl1.CenterColor = System.Drawing.Color.White;
-            this.myLedControl1.FlashInterval = 500;
-            this.myLedControl1.GapWidth = 1;
-            this.myLedControl1.IsBorder = true;
-            this.myLedControl1.IsFlash = false;
-            this.myLedControl1.IsHighLight = true;
-            this.myLedControl1.LampColor = new System.Drawing.Color[] {
-        System.Drawing.Color.Green,
-        System.Drawing.Color.Yellow};
-            this.myLedControl1.LedColor = System.Drawing.Color.MediumSeaGreen;
-            this.myLedControl1.LedFalseColor = System.Drawing.Color.Silver;
-            this.myLedControl1.LedStatus = true;
-            this.myLedControl1.LedTrueColor = System.Drawing.Color.MediumSeaGreen;
-            this.myLedControl1.Location = new System.Drawing.Point(142, 71);
-            this.myLedControl1.Margin = new System.Windows.Forms.Padding(0, 7, 34, 7);
-            this.myLedControl1.Name = "myLedControl1";
-            this.myLedControl1.Size = new System.Drawing.Size(22, 27);
-            this.myLedControl1.TabIndex = 68;
-            // 
-            // myLedControl6
-            // 
-            this.myLedControl6.BorderWidth = 1;
-            this.myLedControl6.CenterColor = System.Drawing.Color.White;
-            this.myLedControl6.FlashInterval = 500;
-            this.myLedControl6.GapWidth = 1;
-            this.myLedControl6.IsBorder = true;
-            this.myLedControl6.IsFlash = false;
-            this.myLedControl6.IsHighLight = true;
-            this.myLedControl6.LampColor = new System.Drawing.Color[] {
-        System.Drawing.Color.Green,
-        System.Drawing.Color.Yellow};
-            this.myLedControl6.LedColor = System.Drawing.Color.MediumSeaGreen;
-            this.myLedControl6.LedFalseColor = System.Drawing.Color.Silver;
-            this.myLedControl6.LedStatus = true;
-            this.myLedControl6.LedTrueColor = System.Drawing.Color.MediumSeaGreen;
-            this.myLedControl6.Location = new System.Drawing.Point(424, 71);
-            this.myLedControl6.Margin = new System.Windows.Forms.Padding(0, 9, 34, 9);
-            this.myLedControl6.Name = "myLedControl6";
-            this.myLedControl6.Size = new System.Drawing.Size(22, 27);
-            this.myLedControl6.TabIndex = 73;
-            // 
             // label25
             // 
             this.label25.AutoSize = true;
@@ -487,74 +377,6 @@
             this.label25.Size = new System.Drawing.Size(69, 20);
             this.label25.TabIndex = 0;
             this.label25.Text = "设备编号";
-            // 
-            // myLedControl3
-            // 
-            this.myLedControl3.BorderWidth = 1;
-            this.myLedControl3.CenterColor = System.Drawing.Color.White;
-            this.myLedControl3.FlashInterval = 500;
-            this.myLedControl3.GapWidth = 1;
-            this.myLedControl3.IsBorder = true;
-            this.myLedControl3.IsFlash = false;
-            this.myLedControl3.IsHighLight = true;
-            this.myLedControl3.LampColor = new System.Drawing.Color[] {
-        System.Drawing.Color.Green,
-        System.Drawing.Color.Yellow};
-            this.myLedControl3.LedColor = System.Drawing.Color.MediumSeaGreen;
-            this.myLedControl3.LedFalseColor = System.Drawing.Color.Silver;
-            this.myLedControl3.LedStatus = true;
-            this.myLedControl3.LedTrueColor = System.Drawing.Color.MediumSeaGreen;
-            this.myLedControl3.Location = new System.Drawing.Point(255, 71);
-            this.myLedControl3.Margin = new System.Windows.Forms.Padding(0, 9, 34, 9);
-            this.myLedControl3.Name = "myLedControl3";
-            this.myLedControl3.Size = new System.Drawing.Size(22, 27);
-            this.myLedControl3.TabIndex = 70;
-            // 
-            // myLedControl5
-            // 
-            this.myLedControl5.BorderWidth = 1;
-            this.myLedControl5.CenterColor = System.Drawing.Color.White;
-            this.myLedControl5.FlashInterval = 500;
-            this.myLedControl5.GapWidth = 1;
-            this.myLedControl5.IsBorder = true;
-            this.myLedControl5.IsFlash = false;
-            this.myLedControl5.IsHighLight = true;
-            this.myLedControl5.LampColor = new System.Drawing.Color[] {
-        System.Drawing.Color.Green,
-        System.Drawing.Color.Yellow};
-            this.myLedControl5.LedColor = System.Drawing.Color.MediumSeaGreen;
-            this.myLedControl5.LedFalseColor = System.Drawing.Color.Silver;
-            this.myLedControl5.LedStatus = true;
-            this.myLedControl5.LedTrueColor = System.Drawing.Color.MediumSeaGreen;
-            this.myLedControl5.Location = new System.Drawing.Point(367, 71);
-            this.myLedControl5.Margin = new System.Windows.Forms.Padding(0, 9, 34, 9);
-            this.myLedControl5.Name = "myLedControl5";
-            this.myLedControl5.Size = new System.Drawing.Size(22, 27);
-            this.myLedControl5.TabIndex = 72;
-            // 
-            // myLedControl4
-            // 
-            this.myLedControl4.BorderWidth = 1;
-            this.myLedControl4.CenterColor = System.Drawing.Color.White;
-            this.myLedControl4.FlashInterval = 500;
-            this.myLedControl4.GapWidth = 1;
-            this.myLedControl4.IsBorder = true;
-            this.myLedControl4.IsFlash = false;
-            this.myLedControl4.IsHighLight = true;
-            this.myLedControl4.LampColor = new System.Drawing.Color[] {
-        System.Drawing.Color.Green,
-        System.Drawing.Color.Yellow};
-            this.myLedControl4.LedColor = System.Drawing.Color.MediumSeaGreen;
-            this.myLedControl4.LedFalseColor = System.Drawing.Color.Silver;
-            this.myLedControl4.LedStatus = true;
-            this.myLedControl4.LedTrueColor = System.Drawing.Color.MediumSeaGreen;
-            this.myLedControl4.Location = new System.Drawing.Point(311, 71);
-            this.myLedControl4.Margin = new System.Windows.Forms.Padding(0, 9, 34, 9);
-            this.myLedControl4.MaximumSize = new System.Drawing.Size(22, 27);
-            this.myLedControl4.MinimumSize = new System.Drawing.Size(22, 27);
-            this.myLedControl4.Name = "myLedControl4";
-            this.myLedControl4.Size = new System.Drawing.Size(22, 27);
-            this.myLedControl4.TabIndex = 71;
             // 
             // Frequency4
             // 
@@ -1190,7 +1012,7 @@
             this.groupBox2.Size = new System.Drawing.Size(578, 202);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "目标组选择";
+            this.groupBox2.Text = "目标设备号选择";
             // 
             // TargetGroupNum4
             // 
@@ -1382,7 +1204,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("微软雅黑", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label15.Font = new System.Drawing.Font("微软雅黑", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label15.ForeColor = System.Drawing.Color.Black;
             this.label15.Location = new System.Drawing.Point(519, 9);
             this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -1504,7 +1326,7 @@
             // 
             // SendDataButton
             // 
-            this.SendDataButton.Location = new System.Drawing.Point(298, 116);
+            this.SendDataButton.Location = new System.Drawing.Point(296, 116);
             this.SendDataButton.Margin = new System.Windows.Forms.Padding(4);
             this.SendDataButton.Name = "SendDataButton";
             this.SendDataButton.Size = new System.Drawing.Size(108, 41);
@@ -1533,15 +1355,15 @@
             this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label24.MaximumSize = new System.Drawing.Size(225, 0);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(177, 40);
+            this.label24.Size = new System.Drawing.Size(186, 40);
             this.label24.TabIndex = 0;
-            this.label24.Text = "Release Date: 2020.9.9 Version: 1.4";
+            this.label24.Text = "Release Date: 2021.4.13 Version: 1.4";
             // 
             // label16
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label16.Location = new System.Drawing.Point(1211, 937);
+            this.label16.Location = new System.Drawing.Point(1211, 939);
             this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(249, 20);
@@ -1576,6 +1398,7 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.DebugButton);
             this.groupBox6.Controls.Add(this.groupBox10);
             this.groupBox6.Controls.Add(this.SerialPortConfigGroupBox);
             this.groupBox6.Controls.Add(this.SerialCheckBox);
@@ -1588,6 +1411,19 @@
             this.groupBox6.TabIndex = 8;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "发送方式选择";
+            // 
+            // DebugButton
+            // 
+            this.DebugButton.Enabled = false;
+            this.DebugButton.Location = new System.Drawing.Point(299, 44);
+            this.DebugButton.Name = "DebugButton";
+            this.DebugButton.Size = new System.Drawing.Size(107, 27);
+            this.DebugButton.TabIndex = 10;
+            this.DebugButton.Text = "DEBUG";
+            this.DebugButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.DebugButton.UseVisualStyleBackColor = true;
+            this.DebugButton.Visible = false;
+            this.DebugButton.Click += new System.EventHandler(this.button2_Click);
             // 
             // groupBox10
             // 
@@ -1885,20 +1721,188 @@
             // 
             this.IntervalSendTimer.Tick += new System.EventHandler(this.IntervalSendTimer_Tick);
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(420, 15);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 10;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // HeartTimer
             // 
             this.HeartTimer.Interval = 5000;
             this.HeartTimer.Tick += new System.EventHandler(this.HeartTimer_Tick);
+            // 
+            // myLedControl8
+            // 
+            this.myLedControl8.BorderWidth = 1;
+            this.myLedControl8.CenterColor = System.Drawing.Color.White;
+            this.myLedControl8.FlashInterval = 500;
+            this.myLedControl8.GapWidth = 1;
+            this.myLedControl8.IsBorder = true;
+            this.myLedControl8.IsFlash = false;
+            this.myLedControl8.IsHighLight = true;
+            this.myLedControl8.LampColor = new System.Drawing.Color[] {
+        System.Drawing.Color.Green,
+        System.Drawing.Color.Yellow};
+            this.myLedControl8.LedColor = System.Drawing.Color.MediumSeaGreen;
+            this.myLedControl8.LedFalseColor = System.Drawing.Color.Silver;
+            this.myLedControl8.LedStatus = true;
+            this.myLedControl8.LedTrueColor = System.Drawing.Color.MediumSeaGreen;
+            this.myLedControl8.Location = new System.Drawing.Point(536, 71);
+            this.myLedControl8.Margin = new System.Windows.Forms.Padding(0, 12, 34, 12);
+            this.myLedControl8.Name = "myLedControl8";
+            this.myLedControl8.Size = new System.Drawing.Size(22, 27);
+            this.myLedControl8.TabIndex = 75;
+            // 
+            // myLedControl7
+            // 
+            this.myLedControl7.BorderWidth = 1;
+            this.myLedControl7.CenterColor = System.Drawing.Color.White;
+            this.myLedControl7.FlashInterval = 500;
+            this.myLedControl7.GapWidth = 1;
+            this.myLedControl7.IsBorder = true;
+            this.myLedControl7.IsFlash = false;
+            this.myLedControl7.IsHighLight = true;
+            this.myLedControl7.LampColor = new System.Drawing.Color[] {
+        System.Drawing.Color.Green,
+        System.Drawing.Color.Yellow};
+            this.myLedControl7.LedColor = System.Drawing.Color.MediumSeaGreen;
+            this.myLedControl7.LedFalseColor = System.Drawing.Color.Silver;
+            this.myLedControl7.LedStatus = true;
+            this.myLedControl7.LedTrueColor = System.Drawing.Color.MediumSeaGreen;
+            this.myLedControl7.Location = new System.Drawing.Point(481, 71);
+            this.myLedControl7.Margin = new System.Windows.Forms.Padding(0, 9, 34, 9);
+            this.myLedControl7.Name = "myLedControl7";
+            this.myLedControl7.Size = new System.Drawing.Size(22, 27);
+            this.myLedControl7.TabIndex = 74;
+            // 
+            // myLedControl2
+            // 
+            this.myLedControl2.BorderWidth = 1;
+            this.myLedControl2.CenterColor = System.Drawing.Color.White;
+            this.myLedControl2.FlashInterval = 500;
+            this.myLedControl2.GapWidth = 1;
+            this.myLedControl2.IsBorder = true;
+            this.myLedControl2.IsFlash = false;
+            this.myLedControl2.IsHighLight = true;
+            this.myLedControl2.LampColor = new System.Drawing.Color[] {
+        System.Drawing.Color.Green,
+        System.Drawing.Color.Yellow};
+            this.myLedControl2.LedColor = System.Drawing.Color.MediumSeaGreen;
+            this.myLedControl2.LedFalseColor = System.Drawing.Color.Silver;
+            this.myLedControl2.LedStatus = true;
+            this.myLedControl2.LedTrueColor = System.Drawing.Color.MediumSeaGreen;
+            this.myLedControl2.Location = new System.Drawing.Point(199, 71);
+            this.myLedControl2.Margin = new System.Windows.Forms.Padding(0, 9, 34, 9);
+            this.myLedControl2.Name = "myLedControl2";
+            this.myLedControl2.Size = new System.Drawing.Size(22, 27);
+            this.myLedControl2.TabIndex = 69;
+            // 
+            // myLedControl1
+            // 
+            this.myLedControl1.BorderWidth = 1;
+            this.myLedControl1.CenterColor = System.Drawing.Color.White;
+            this.myLedControl1.FlashInterval = 500;
+            this.myLedControl1.GapWidth = 1;
+            this.myLedControl1.IsBorder = true;
+            this.myLedControl1.IsFlash = false;
+            this.myLedControl1.IsHighLight = true;
+            this.myLedControl1.LampColor = new System.Drawing.Color[] {
+        System.Drawing.Color.Green,
+        System.Drawing.Color.Yellow};
+            this.myLedControl1.LedColor = System.Drawing.Color.MediumSeaGreen;
+            this.myLedControl1.LedFalseColor = System.Drawing.Color.Silver;
+            this.myLedControl1.LedStatus = true;
+            this.myLedControl1.LedTrueColor = System.Drawing.Color.MediumSeaGreen;
+            this.myLedControl1.Location = new System.Drawing.Point(142, 71);
+            this.myLedControl1.Margin = new System.Windows.Forms.Padding(0, 7, 34, 7);
+            this.myLedControl1.Name = "myLedControl1";
+            this.myLedControl1.Size = new System.Drawing.Size(22, 27);
+            this.myLedControl1.TabIndex = 68;
+            // 
+            // myLedControl6
+            // 
+            this.myLedControl6.BorderWidth = 1;
+            this.myLedControl6.CenterColor = System.Drawing.Color.White;
+            this.myLedControl6.FlashInterval = 500;
+            this.myLedControl6.GapWidth = 1;
+            this.myLedControl6.IsBorder = true;
+            this.myLedControl6.IsFlash = false;
+            this.myLedControl6.IsHighLight = true;
+            this.myLedControl6.LampColor = new System.Drawing.Color[] {
+        System.Drawing.Color.Green,
+        System.Drawing.Color.Yellow};
+            this.myLedControl6.LedColor = System.Drawing.Color.MediumSeaGreen;
+            this.myLedControl6.LedFalseColor = System.Drawing.Color.Silver;
+            this.myLedControl6.LedStatus = true;
+            this.myLedControl6.LedTrueColor = System.Drawing.Color.MediumSeaGreen;
+            this.myLedControl6.Location = new System.Drawing.Point(424, 71);
+            this.myLedControl6.Margin = new System.Windows.Forms.Padding(0, 9, 34, 9);
+            this.myLedControl6.Name = "myLedControl6";
+            this.myLedControl6.Size = new System.Drawing.Size(22, 27);
+            this.myLedControl6.TabIndex = 73;
+            // 
+            // myLedControl3
+            // 
+            this.myLedControl3.BorderWidth = 1;
+            this.myLedControl3.CenterColor = System.Drawing.Color.White;
+            this.myLedControl3.FlashInterval = 500;
+            this.myLedControl3.GapWidth = 1;
+            this.myLedControl3.IsBorder = true;
+            this.myLedControl3.IsFlash = false;
+            this.myLedControl3.IsHighLight = true;
+            this.myLedControl3.LampColor = new System.Drawing.Color[] {
+        System.Drawing.Color.Green,
+        System.Drawing.Color.Yellow};
+            this.myLedControl3.LedColor = System.Drawing.Color.MediumSeaGreen;
+            this.myLedControl3.LedFalseColor = System.Drawing.Color.Silver;
+            this.myLedControl3.LedStatus = true;
+            this.myLedControl3.LedTrueColor = System.Drawing.Color.MediumSeaGreen;
+            this.myLedControl3.Location = new System.Drawing.Point(255, 71);
+            this.myLedControl3.Margin = new System.Windows.Forms.Padding(0, 9, 34, 9);
+            this.myLedControl3.Name = "myLedControl3";
+            this.myLedControl3.Size = new System.Drawing.Size(22, 27);
+            this.myLedControl3.TabIndex = 70;
+            // 
+            // myLedControl5
+            // 
+            this.myLedControl5.BorderWidth = 1;
+            this.myLedControl5.CenterColor = System.Drawing.Color.White;
+            this.myLedControl5.FlashInterval = 500;
+            this.myLedControl5.GapWidth = 1;
+            this.myLedControl5.IsBorder = true;
+            this.myLedControl5.IsFlash = false;
+            this.myLedControl5.IsHighLight = true;
+            this.myLedControl5.LampColor = new System.Drawing.Color[] {
+        System.Drawing.Color.Green,
+        System.Drawing.Color.Yellow};
+            this.myLedControl5.LedColor = System.Drawing.Color.MediumSeaGreen;
+            this.myLedControl5.LedFalseColor = System.Drawing.Color.Silver;
+            this.myLedControl5.LedStatus = true;
+            this.myLedControl5.LedTrueColor = System.Drawing.Color.MediumSeaGreen;
+            this.myLedControl5.Location = new System.Drawing.Point(367, 71);
+            this.myLedControl5.Margin = new System.Windows.Forms.Padding(0, 9, 34, 9);
+            this.myLedControl5.Name = "myLedControl5";
+            this.myLedControl5.Size = new System.Drawing.Size(22, 27);
+            this.myLedControl5.TabIndex = 72;
+            // 
+            // myLedControl4
+            // 
+            this.myLedControl4.BorderWidth = 1;
+            this.myLedControl4.CenterColor = System.Drawing.Color.White;
+            this.myLedControl4.FlashInterval = 500;
+            this.myLedControl4.GapWidth = 1;
+            this.myLedControl4.IsBorder = true;
+            this.myLedControl4.IsFlash = false;
+            this.myLedControl4.IsHighLight = true;
+            this.myLedControl4.LampColor = new System.Drawing.Color[] {
+        System.Drawing.Color.Green,
+        System.Drawing.Color.Yellow};
+            this.myLedControl4.LedColor = System.Drawing.Color.MediumSeaGreen;
+            this.myLedControl4.LedFalseColor = System.Drawing.Color.Silver;
+            this.myLedControl4.LedStatus = true;
+            this.myLedControl4.LedTrueColor = System.Drawing.Color.MediumSeaGreen;
+            this.myLedControl4.Location = new System.Drawing.Point(311, 71);
+            this.myLedControl4.Margin = new System.Windows.Forms.Padding(0, 9, 34, 9);
+            this.myLedControl4.MaximumSize = new System.Drawing.Size(22, 27);
+            this.myLedControl4.MinimumSize = new System.Drawing.Size(22, 27);
+            this.myLedControl4.Name = "myLedControl4";
+            this.myLedControl4.Size = new System.Drawing.Size(22, 27);
+            this.myLedControl4.TabIndex = 71;
             // 
             // MainForm
             // 
@@ -1906,7 +1910,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1472, 963);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.TimeShowLable);
             this.Controls.Add(this.label17);
@@ -1925,7 +1928,7 @@
             this.MinimumSize = new System.Drawing.Size(1490, 1010);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "动物群体控制系统V1.2";
+            this.Text = "动物群体控制系统V1.4";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.groupBox1.ResumeLayout(false);
@@ -2074,7 +2077,7 @@
         private System.Windows.Forms.Button CleanSerialRecvTextBoxButton;
         private System.Windows.Forms.Timer IntervalSendTimer;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button DebugButton;
         private AnimalCtrlSystem.MyLedControl myLedControl1;
         private System.Windows.Forms.GroupBox groupBox4;
         private AnimalCtrlSystem.MyLedControl myLedControl2;

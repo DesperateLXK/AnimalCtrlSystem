@@ -106,10 +106,10 @@ namespace AnimalCtrl
 
             for (int i = 0; i < CHECKBOX_MAX; i++)
             {
-                this.TargetGroupNum1.Items.Add((i + 1) + "组");
-                this.TargetGroupNum2.Items.Add((i + 1) + "组");
-                this.TargetGroupNum3.Items.Add((i + 1) + "组");
-                this.TargetGroupNum4.Items.Add((i + 1) + "组");
+                this.TargetGroupNum1.Items.Add((i + 1) + "号");
+                this.TargetGroupNum2.Items.Add((i + 1) + "号");
+                this.TargetGroupNum3.Items.Add((i + 1) + "号");
+                this.TargetGroupNum4.Items.Add((i + 1) + "号");
             }
             IsOpenCheckBoxNum1.Checked = true; //默认1路打开
             SerialCheckBox.Checked = true;
@@ -155,7 +155,7 @@ namespace AnimalCtrl
         {
             CtrlMyLedStatus(false);
         }
-
+        //控制所有Led状态
         public void CtrlMyLedStatus(bool ledStatus)
         {
             myLedControl1.LedStatus = ledStatus;

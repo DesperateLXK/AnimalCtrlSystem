@@ -104,7 +104,7 @@ namespace AnimalCtrl
         }
 
 
-        //注释的语句可以设置CheckList只能选择一项
+        #region//注释的语句可以设置CheckList只能选择一项
         private void TargetGroupNum1_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             //if (e.CurrentValue == CheckState.Checked) return;//取消选中就不用进行以下操作
@@ -135,7 +135,9 @@ namespace AnimalCtrl
         {
 
         }
-        
+        #endregion
+
+
         #region  //训练日志显示以及储存
         public void TrainLogDisplayAndSave()
         {
@@ -156,6 +158,7 @@ namespace AnimalCtrl
             if (IsOpenCheckBoxNum1.CheckState.ToString() == "Checked")
             {
                 richTextBox1.AppendText("=========第1路参数=========\n");
+                richTextBox1.AppendText("刺激编号：" + Convert.ToInt16(serialSendData1[13]).ToString() + "\n");
                 richTextBox1.AppendText("刺激通道：" + StimunChannelNum1.Text.ToString() + "\t");
                 richTextBox1.AppendText("脉冲选择：" + PosNegPulseNum1.Text.ToString() + "\n");
                 richTextBox1.AppendText("脉冲长度：" + PulseLengthNum1.Text.ToString() + "\t");
@@ -170,6 +173,7 @@ namespace AnimalCtrl
             if (IsOpenCheckBoxNum2.CheckState.ToString() == "Checked")
             {
                 richTextBox1.AppendText("=========第2路参数=========\n");
+                richTextBox1.AppendText("刺激编号：" + Convert.ToInt16(serialSendData2[13]).ToString() + "\n");
                 richTextBox1.AppendText("刺激通道：" + StimunChannelNum2.Text.ToString() + "\t");
                 richTextBox1.AppendText("脉冲选择：" + PosNegPulseNum2.Text.ToString() + "\n");
                 richTextBox1.AppendText("脉冲长度：" + PulseLengthNum2.Text.ToString() + "\t");
@@ -184,6 +188,7 @@ namespace AnimalCtrl
             if (IsOpenCheckBoxNum3.CheckState.ToString() == "Checked")
             {
                 richTextBox1.AppendText("=========第3路参数=========\n");
+                richTextBox1.AppendText("刺激编号：" + Convert.ToInt16(serialSendData3[13]).ToString() + "\n");
                 richTextBox1.AppendText("刺激通道：" + StimunChannelNum3.Text.ToString() + "\t");
                 richTextBox1.AppendText("脉冲选择：" + PosNegPulseNum3.Text.ToString() + "\n");
                 richTextBox1.AppendText("脉冲长度：" + PulseLengthNum3.Text.ToString() + "\t");
@@ -198,6 +203,7 @@ namespace AnimalCtrl
             if (IsOpenCheckBoxNum4.CheckState.ToString() == "Checked")
             {
                 richTextBox1.AppendText("=========第4路参数=========\n");
+                richTextBox1.AppendText("刺激编号：" + Convert.ToInt16(serialSendData4[13]).ToString() + "\n");
                 richTextBox1.AppendText("刺激通道：" + StimunChannelNum4.Text.ToString() + "\t");
                 richTextBox1.AppendText("脉冲选择：" + PosNegPulseNum4.Text.ToString() + "\n");
                 richTextBox1.AppendText("脉冲长度：" + PulseLengthNum4.Text.ToString() + "\t");
@@ -366,23 +372,15 @@ namespace AnimalCtrl
             }
         }
 
-        public byte[] DEBUG_testVal = { 0XAA, 0XEE, 0XCC, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X80, 0X00, 0XE4, 0XFF };
-        public byte[] DEBUG_testVal2 = { 0XAA, 0XEE, 0XCC, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X40, 0X00, 0XA4, 0XFF };
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            serialPort.Write(DEBUG_testVal, 0, DEBUG_testVal.Length);
-        }
-
-        //
-        public byte[] serialSendHeartData = { 0XBB, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0XFF, 0X00, 0XBA, 0X00 };
+        //每次都发送的心跳指令
+        public static byte[] serialSendHeartData = { 0XBB, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0XFF, 0X00, 0XBA, 0X00 };
         private void HeartTimer_Tick(object sender, EventArgs e)
         {
             //如果开启了
             if (serialPort.IsOpen)
             {
                 CtrlMyLedStatus(false);
-                DelayMs(10);
+                DelayMs(15);
                 serialPort.Write(serialSendHeartData, 0, serialSendHeartData.Length);//发送数据
                 //serialPort.Write(DEBUG_testVal, 0, DEBUG_testVal.Length);//发送数据
                 //serialPort.Write(DEBUG_testVal2, 0, DEBUG_testVal2.Length);//发送数据
@@ -392,6 +390,16 @@ namespace AnimalCtrl
                 CtrlMyLedStatus(false);
                 HeartTimer.Interval = 100;
             }
+        }
+
+        //测试使用
+        //public byte[] DEBUG_testVal = { 0XAA, 0XEE, 0XCC, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X80, 0X00, 0XE4, 0XFF };
+        //public byte[] DEBUG_testVal2 = { 0XAA, 0XEE, 0XCC, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X40, 0X00, 0XA4, 0XFF };
+        public byte[] DEBUG_testVal3 = { 0XAA, 0XEE, 0XDD, 0X81, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X80, 0X32, 0XA8, 0XFF };
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            serialPort.Write(DEBUG_testVal3, 0, DEBUG_testVal3.Length);
         }
     }
 }
