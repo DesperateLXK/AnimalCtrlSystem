@@ -158,7 +158,7 @@ namespace AnimalCtrl
             if (IsOpenCheckBoxNum1.CheckState.ToString() == "Checked")
             {
                 richTextBox1.AppendText("=========第1路参数=========\n");
-                richTextBox1.AppendText("刺激编号：" + Convert.ToInt16(serialSendData1[13]).ToString() + "\n");
+                richTextBox1.AppendText("刺激编号：" + (Convert.ToInt16(serialSendData1[13]) + 1).ToString() + "\n");
                 richTextBox1.AppendText("刺激通道：" + StimunChannelNum1.Text.ToString() + "\t");
                 richTextBox1.AppendText("脉冲选择：" + PosNegPulseNum1.Text.ToString() + "\n");
                 richTextBox1.AppendText("脉冲长度：" + PulseLengthNum1.Text.ToString() + "\t");
@@ -173,7 +173,7 @@ namespace AnimalCtrl
             if (IsOpenCheckBoxNum2.CheckState.ToString() == "Checked")
             {
                 richTextBox1.AppendText("=========第2路参数=========\n");
-                richTextBox1.AppendText("刺激编号：" + Convert.ToInt16(serialSendData2[13]).ToString() + "\n");
+                richTextBox1.AppendText("刺激编号：" + (Convert.ToInt16(serialSendData2[13]) + 1).ToString() + "\n");
                 richTextBox1.AppendText("刺激通道：" + StimunChannelNum2.Text.ToString() + "\t");
                 richTextBox1.AppendText("脉冲选择：" + PosNegPulseNum2.Text.ToString() + "\n");
                 richTextBox1.AppendText("脉冲长度：" + PulseLengthNum2.Text.ToString() + "\t");
@@ -188,7 +188,7 @@ namespace AnimalCtrl
             if (IsOpenCheckBoxNum3.CheckState.ToString() == "Checked")
             {
                 richTextBox1.AppendText("=========第3路参数=========\n");
-                richTextBox1.AppendText("刺激编号：" + Convert.ToInt16(serialSendData3[13]).ToString() + "\n");
+                richTextBox1.AppendText("刺激编号：" + (Convert.ToInt16(serialSendData3[13]) + 1).ToString() + "\n");
                 richTextBox1.AppendText("刺激通道：" + StimunChannelNum3.Text.ToString() + "\t");
                 richTextBox1.AppendText("脉冲选择：" + PosNegPulseNum3.Text.ToString() + "\n");
                 richTextBox1.AppendText("脉冲长度：" + PulseLengthNum3.Text.ToString() + "\t");
@@ -203,7 +203,7 @@ namespace AnimalCtrl
             if (IsOpenCheckBoxNum4.CheckState.ToString() == "Checked")
             {
                 richTextBox1.AppendText("=========第4路参数=========\n");
-                richTextBox1.AppendText("刺激编号：" + Convert.ToInt16(serialSendData4[13]).ToString() + "\n");
+                richTextBox1.AppendText("刺激编号：" + (Convert.ToInt16(serialSendData4[13]) + 1).ToString() + "\n");
                 richTextBox1.AppendText("刺激通道：" + StimunChannelNum4.Text.ToString() + "\t");
                 richTextBox1.AppendText("脉冲选择：" + PosNegPulseNum4.Text.ToString() + "\n");
                 richTextBox1.AppendText("脉冲长度：" + PulseLengthNum4.Text.ToString() + "\t");
@@ -292,6 +292,7 @@ namespace AnimalCtrl
         private void CleanSerialRecvTextBoxButton_Click(object sender, EventArgs e)
         {
             PortRecTextBox.Text = string.Empty;
+            richTextBox1.ScrollToCaret();
         }
         //发送键
         private void SendDataButton_Click(object sender, EventArgs e)
@@ -330,17 +331,43 @@ namespace AnimalCtrl
             }
         }
 
+        static int intervalSendValMAX = 6000000; //定时发送间隔时间最大为6000秒
+        static int intervalSendValMIN = 300;   //最小时间为0.3秒
         private void IntervalSendStartButton_Click(object sender, EventArgs e)
         {
             if (IntervalSendStartButton.Text == "开始")
             {
-                IntervalSendTimer.Interval = Convert.ToInt32(IntervalTextBox.Text);
+                if (IntervalTextBox.Text == string.Empty)
+                {
+                    MessageBox.Show("请输入数字\n", "ERROR");
+                    return;
+                }
+
+                int intervalVal = Convert.ToInt32(IntervalTextBox.Text);
+
+                if (intervalVal < intervalSendValMIN)
+                {
+                    IntervalTextBox.Text = intervalSendValMIN.ToString();
+                    intervalVal = intervalSendValMIN;
+                }
+                else if (intervalVal > intervalSendValMAX)
+                {
+                    IntervalTextBox.Text = intervalSendValMAX.ToString();
+                    intervalVal = intervalSendValMAX;
+                }
+
+                IntervalSendTimer.Interval = intervalVal;
+                
                 IntervalSendTimer.Start();
+                OpenIntervalSendCheckBox.Enabled = false;
+                IntervalTextBox.Enabled = false;
                 IntervalSendStartButton.Text = "停止";
             }
             else if (IntervalSendStartButton.Text == "停止")
             {
                 IntervalSendTimer.Stop();
+                OpenIntervalSendCheckBox.Enabled = true;
+                IntervalTextBox.Enabled = true;
                 IntervalSendStartButton.Text = "开始";
             }
         }
@@ -393,6 +420,8 @@ namespace AnimalCtrl
         }
 
         //测试使用
+        //AA EE DD 81 00 00 00 00 00 00 00 00 80 32 A8 FF
+        //AA EE DD 89 00 00 00 00 00 00 00 00 40 22 60 FF
         //public byte[] DEBUG_testVal = { 0XAA, 0XEE, 0XCC, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X80, 0X00, 0XE4, 0XFF };
         //public byte[] DEBUG_testVal2 = { 0XAA, 0XEE, 0XCC, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X40, 0X00, 0XA4, 0XFF };
         public byte[] DEBUG_testVal3 = { 0XAA, 0XEE, 0XDD, 0X81, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X80, 0X32, 0XA8, 0XFF };
@@ -401,5 +430,14 @@ namespace AnimalCtrl
         {
             serialPort.Write(DEBUG_testVal3, 0, DEBUG_testVal3.Length);
         }
+
+
+        private void PortRecTextBox_TextChanged(object sender, EventArgs e)
+        {
+            //
+            //PortRecTextBox.Refresh();
+        }
+        
+        
     }
 }

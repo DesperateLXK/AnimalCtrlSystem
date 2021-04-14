@@ -445,7 +445,7 @@ namespace AnimalCtrl
                                     MessageBox.Show("数据处理异常！");
                                 }
 
-                                //注释语句为调试用
+                                //注释语句为调试时使用
                                 //str = ByteToString(ReceiveBytes);
                                 //PortRecTextBox.Text += string.Format("{0}\r\n", dateTimeNow);
                                 //PortRecTextBox.AppendText(str + '\n');
@@ -473,6 +473,7 @@ namespace AnimalCtrl
                 MessageBox.Show("请打开某个串口", "错误提示");
             }
         }
+
         //数据位中的检验位判断
         public bool isDataCheckBitSuccess(byte[] ReceiveBytes)
         {
@@ -552,60 +553,62 @@ namespace AnimalCtrl
             switch (tempChannelBit) //通道编号
             {
                 case 0x01:
-                    channelNumStr = "1通道 ";
+                    channelNumStr = "   1通道            ";
                     break;
                 case 0x02:
-                    channelNumStr = "1-3通道 ";
+                    channelNumStr = "1-3通道            ";
                     break;
                 case 0x03:
-                    channelNumStr = "3通道 ";
+                    channelNumStr = "   3通道            ";
                     break;
-                case 0x04:
-                    channelNumStr = "2通道 ";
+                case 0x04: 
+                    channelNumStr = "   2通道            ";
                     break;
                 case 0x05:
-                    channelNumStr = "2-3通道 ";
-                    break;
+                    channelNumStr = "2-3通道            ";
+                    break; 
                 case 0x06:
-                    channelNumStr = "4通道 ";
+                    channelNumStr = "   4通道            ";
                     break;
                 case 0x08:
-                    channelNumStr = "1-4通道 ";
+                    channelNumStr = "1-4通道            ";
                     break;
                 case 0x09:
-                    channelNumStr = "2-4通道 ";
+                    channelNumStr = "2-4通道            ";
                     break;
 
             }
+
             switch (tempReceiveBytes[12])//设备编号
             {
                 //1号设备
                 case 0X80:
-                    devNumStr = "1号设备 ";
+                    devNumStr = "1号设备   ";
                     break;
                 case 0X40:
-                    devNumStr = "2号设备 ";
+                    devNumStr = "2号设备   ";
                     break;
                 case 0X20:
-                    devNumStr = "3号设备 ";
+                    devNumStr = "3号设备   ";
                     break;
                 case 0X10:
-                    devNumStr = "4号设备 ";
+                    devNumStr = "4号设备   ";
                     break;
                 case 0X08:
-                    devNumStr = "5号设备 ";
+                    devNumStr = "5号设备   ";
                     break;
                 case 0X04:
-                    devNumStr = "6号设备 ";
+                    devNumStr = "6号设备   ";
                     break;
                 case 0X02:
-                    devNumStr = "7号设备 ";
+                    devNumStr = "7号设备   ";
                     break;
                 case 0X01:
-                    devNumStr = "8号设备 ";
+                    devNumStr = "8号设备   ";
                     break;
             }
-            stimuSuccessMessage = stimuNumStr + devNumStr + channelNumStr + "刺激成功\n";
+            stimuSuccessMessage = stimuNumStr + devNumStr + channelNumStr + "刺激成功" + "\n";
+            //stimuSuccessMessage = stimuNumStr + devNumStr + channelNumStr;
         }
 
         //处理接受信息
@@ -620,8 +623,8 @@ namespace AnimalCtrl
             else if (ReceiveBytes[2] == 0XDD) //返回刺激成功
             {
                 StimulateSuccessMessageHandle(ReceiveBytes, ref stimuSuccessMessage);
-                PortRecTextBox.ForeColor = Color.Green;
                 PortRecTextBox.AppendText(stimuSuccessMessage);
+                
             }
         }
 
