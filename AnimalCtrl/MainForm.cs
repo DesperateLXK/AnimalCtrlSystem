@@ -58,7 +58,7 @@ namespace AnimalCtrl
 
         private void label17_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            MessageBox.Show("This is an EASTER EGG.\n\n" + "               Author: Lxk_NIEM", "GOOD LUCK ^_^");
+            MessageBox.Show("This is an EASTER EGG.\n\n" + "               Author: NIEM_LK", "GOOD LUCK ^_^");
         }
 
 
@@ -167,7 +167,7 @@ namespace AnimalCtrl
                 richTextBox1.AppendText("脉冲间隔：" + PulseIntervalNum1.Text.ToString() + "ms\n");
                 richTextBox1.AppendText("脉冲串数：" + PulseValNum1.Text.ToString() + "\t");
                 richTextBox1.AppendText("刺激强度：" + StimulationIntensityText1.Text.ToString() + "\n");
-                richTextBox1.AppendText("目标组：" + targetGroupChoose1.ToString() + "\n");
+                richTextBox1.AppendText("目标设备编号：" + targetGroupChoose1.ToString() + "\n");
                 temp += 1;
             }
             if (IsOpenCheckBoxNum2.CheckState.ToString() == "Checked")
@@ -182,7 +182,7 @@ namespace AnimalCtrl
                 richTextBox1.AppendText("脉冲间隔：" + PulseIntervalNum2.Text.ToString() + "ms\n");
                 richTextBox1.AppendText("脉冲串数：" + PulseValNum2.Text.ToString() + "\t");
                 richTextBox1.AppendText("刺激强度：" + StimulationIntensityText2.Text.ToString() + "\n");
-                richTextBox1.AppendText("目标组：" + targetGroupChoose2.ToString() + "\n");
+                richTextBox1.AppendText("目标设备编号：" + targetGroupChoose2.ToString() + "\n");
                 temp += 1;
             }
             if (IsOpenCheckBoxNum3.CheckState.ToString() == "Checked")
@@ -197,7 +197,7 @@ namespace AnimalCtrl
                 richTextBox1.AppendText("脉冲间隔：" + PulseIntervalNum3.Text.ToString() + "ms\n");
                 richTextBox1.AppendText("脉冲串数：" + PulseValNum3.Text.ToString() + "\t");
                 richTextBox1.AppendText("刺激强度：" + StimulationIntensityText3.Text.ToString() + "\n");
-                richTextBox1.AppendText("目标组：" + targetGroupChoose3.ToString() + "\n");
+                richTextBox1.AppendText("目标设备编号：" + targetGroupChoose3.ToString() + "\n");
                 temp += 1;
             }
             if (IsOpenCheckBoxNum4.CheckState.ToString() == "Checked")
@@ -212,7 +212,7 @@ namespace AnimalCtrl
                 richTextBox1.AppendText("脉冲间隔：" + PulseIntervalNum4.Text.ToString() + "ms\n");
                 richTextBox1.AppendText("脉冲串数：" + PulseValNum4.Text.ToString() + "\t");
                 richTextBox1.AppendText("刺激强度：" + StimulationIntensityText4.Text.ToString() + "\n");
-                richTextBox1.AppendText("目标组：" + targetGroupChoose4.ToString() + "\n");
+                richTextBox1.AppendText("目标设备编号：" + targetGroupChoose4.ToString() + "\n");
                 temp += 1;
             }
             richTextBox1.AppendText("========================\n");
@@ -311,7 +311,7 @@ namespace AnimalCtrl
             }
             else
             {
-
+                return;
             }
         }
 
@@ -382,7 +382,7 @@ namespace AnimalCtrl
             }
             else
             {
-
+                return;
             }
         }
 
@@ -411,7 +411,7 @@ namespace AnimalCtrl
                 serialPort.Write(serialSendHeartData, 0, serialSendHeartData.Length);//发送数据
                 //serialPort.Write(DEBUG_testVal, 0, DEBUG_testVal.Length);//发送数据
                 //serialPort.Write(DEBUG_testVal2, 0, DEBUG_testVal2.Length);//发送数据
-                HeartTimer.Interval = 3000;
+                HeartTimer.Interval = 3000; //3秒发一次
             }
             else {
                 CtrlMyLedStatus(false);
@@ -434,7 +434,6 @@ namespace AnimalCtrl
 
         private void PortRecTextBox_TextChanged(object sender, EventArgs e)
         {
-            //
             //PortRecTextBox.Refresh();
         }
         

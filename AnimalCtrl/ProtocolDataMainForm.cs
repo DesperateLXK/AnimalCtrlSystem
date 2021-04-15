@@ -179,7 +179,7 @@ namespace AnimalCtrl
                 if (TargetGroup.GetItemChecked(i))
                 {
                     bitArray.Set(TargetGroup.Items.Count - 1 - i, true);
-                    targetGroupChoose += (i+1).ToString() + "组 ";
+                    targetGroupChoose += (i+1).ToString() + "号 ";
                 }
                 else {
                     bitArray.Set(TargetGroup.Items.Count - 1 - i, false);

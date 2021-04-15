@@ -356,7 +356,7 @@ namespace AnimalCtrl
         byte[] serialFramesHeadBit = { 0XAA, 0XEE }; //数据帧头 两位
         byte serialFramesCheckBit = 0XFF; //数据帧尾
         int dataLen = 13; //数据位 共13位 从ReceiveBytes的第3位到第15位
-        int serialFramesCheckNum = 3; //帧数据位数
+        int serialFramesCheckNum = 3; //帧数据位数 帧头+帧尾为3位
         int serialFramesLen = 16;
         public void DataReceivedByte(object sender, SerialDataReceivedEventArgs e)
         {
@@ -620,12 +620,13 @@ namespace AnimalCtrl
                 byte tempBit = ReceiveBytes[12];
                 HeartDecideDiviceNum(tempBit);
             }
-            else if (ReceiveBytes[2] == 0XDD) //返回刺激成功
+            else if (ReceiveBytes[2] == 0XDD) //判断返回刺激成功
             {
                 StimulateSuccessMessageHandle(ReceiveBytes, ref stimuSuccessMessage);
                 PortRecTextBox.AppendText(stimuSuccessMessage);
                 
             }
+            //如果再添加其他协议功能 就在此处添加即可
         }
 
         #region//原本的数据接收函数 可以接收普通的HEX和ASCII
