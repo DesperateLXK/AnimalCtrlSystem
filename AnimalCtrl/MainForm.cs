@@ -319,12 +319,16 @@ namespace AnimalCtrl
         {
             if (OpenIntervalSendCheckBox.Checked == true)
             {
+                OpenClosePortButton.Enabled = false;
                 SendDataButton.Enabled = false;
                 IntervalTextBox.Enabled = true;
                 IntervalSendStartButton.Enabled = true;
+                ResetPortConfig.Enabled = false;
             }
             else
             {
+                OpenClosePortButton.Enabled = true;
+                ResetPortConfig.Enabled = true;
                 SendDataButton.Enabled = true;
                 IntervalTextBox.Enabled = false;
                 IntervalSendStartButton.Enabled = false;
@@ -399,29 +403,122 @@ namespace AnimalCtrl
             }
         }
 
+        int heartTimes = 0;
+        int heartTimesFlag = 0;
+        int heartFlag = 1;
         //每次都发送的心跳指令
-        public static byte[] serialSendHeartData = { 0XBB, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0XFF, 0X00, 0XBA, 0X00 };
+        public byte[] serialSendHeartData = { 0XBB, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X80, 0X00, 0XBA, 0X00 };
         private void HeartTimer_Tick(object sender, EventArgs e)
         {
             //如果开启了
             if (serialPort.IsOpen)
             {
-                CtrlMyLedStatus(false);
-                DelayMs(15);
-                serialPort.Write(serialSendHeartData, 0, serialSendHeartData.Length);//发送数据
+
+                int tempInt16 = 0;
+
+                if (heartTimesFlag == 1) //先发轮询送一次
+                {
+                    heartTimesFlag = 0;
+                    serialSendHeartData[12] = 0x80;
+                    serialSendHeartData[14] = 0x3B;
+                    for (int i = 0; i < 8; i++)
+                    {
+                        serialPort.Write(serialSendHeartData, 0, serialSendHeartData.Length);
+                        DelayMs(50);//延时50MS
+                        serialSendHeartData[12] = (byte)(serialSendHeartData[12] >> 1);//右移一位
+
+                        serialSendHeartData[14] = 0X00;//清零
+                        for (int k = 0; k < serialSendHeartData.Length - 3; k++)
+                        {
+                            tempInt16 += Convert.ToInt16(serialSendHeartData[k]);
+                        }
+                        tempInt16 = tempInt16 % 256;
+                        serialSendHeartData[14] = Convert.ToByte(tempInt16 & 0x00FF); //只需要取低位
+                    }
+                }
+                //再发送
+
+                //CtrlMyLedStatus(false, true);
+                switch (heartFlag)
+                {
+                    case 1:
+                        serialSendHeartData[12] = 0x80;
+                        serialSendHeartData[14] = 0x3B;
+                        serialPort.Write(serialSendHeartData, 0, serialSendHeartData.Length);//发送数据
+                        break;
+                    case 2:
+                        serialSendHeartData[12] = 0x40;
+                        serialSendHeartData[14] = 0xFB;
+                        serialPort.Write(serialSendHeartData, 0, serialSendHeartData.Length);//发送数据
+                        break;
+                    case 3:
+                        serialSendHeartData[12] = 0x20;
+                        serialSendHeartData[14] = 0xDB;
+                        serialPort.Write(serialSendHeartData, 0, serialSendHeartData.Length);//发送数据
+                        break;
+                    case 4:
+                        serialSendHeartData[12] = 0x10;
+                        serialSendHeartData[14] = 0xCB;
+                        serialPort.Write(serialSendHeartData, 0, serialSendHeartData.Length);//发送数据
+                        break;
+                    case 5:
+                        serialSendHeartData[12] = 0x08;
+                        serialSendHeartData[14] = 0xC3;
+                        serialPort.Write(serialSendHeartData, 0, serialSendHeartData.Length);//发送数据
+                        break;
+                    case 6:
+                        serialSendHeartData[12] = 0x04;
+                        serialSendHeartData[14] = 0xBF;
+                        serialPort.Write(serialSendHeartData, 0, serialSendHeartData.Length);//发送数据
+                        break;
+                    case 7:
+                        serialSendHeartData[12] = 0x02;
+                        serialSendHeartData[14] = 0xBD;
+                        serialPort.Write(serialSendHeartData, 0, serialSendHeartData.Length);//发送数据
+                        break;
+                    case 8:
+                        serialSendHeartData[12] = 0x01;
+                        serialSendHeartData[14] = 0xBC;
+                        serialPort.Write(serialSendHeartData, 0, serialSendHeartData.Length);//发送数据
+                        break;
+                }
+
+
+                if (heartFlag == 8)
+                {
+                    heartFlag = 1;
+                    return;
+                }
+                heartFlag++;
+                //serialPort.Write(serialSendHeartData, 0, serialSendHeartData.Length);//发送数据
                 //serialPort.Write(DEBUG_testVal, 0, DEBUG_testVal.Length);//发送数据
                 //serialPort.Write(DEBUG_testVal2, 0, DEBUG_testVal2.Length);//发送数据
-                HeartTimer.Interval = 3000; //3秒发一次
+                HeartTimer.Interval = 1000; //每隔8秒发一轮
             }
             else {
-                CtrlMyLedStatus(false);
+                heartTimesFlag = 1;
+                CtrlMyLedStatus(false, true);
                 HeartTimer.Interval = 100;
             }
         }
 
+        public long rageHeartTimeFlag = 0;
+        private void RageHeartSignal_Tick(object sender, EventArgs e)
+        {
+            rageHeartTimeFlag = GetTimeStamp(false);
+            for (int i = 0; i < 8; i++)
+            {
+                if (rageHeartTimeFlag - heartDataTimeTemp[i] > 12)
+                {
+                    CtrlMyLedStatus(false, i + 1); //大于12秒 熄灭
+                }
+            }
+        }
         //测试使用
         //AA EE DD 81 00 00 00 00 00 00 00 00 80 32 A8 FF
         //AA EE DD 89 00 00 00 00 00 00 00 00 40 22 60 FF
+        //AA EE CC 00 00 00 00 00 00 00 00 00 80 00 E4 FF
+        //AA EE CC 00 00 00 00 00 00 00 00 00 40 00 A4 FF
         //public byte[] DEBUG_testVal = { 0XAA, 0XEE, 0XCC, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X80, 0X00, 0XE4, 0XFF };
         //public byte[] DEBUG_testVal2 = { 0XAA, 0XEE, 0XCC, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X40, 0X00, 0XA4, 0XFF };
         public byte[] DEBUG_testVal3 = { 0XAA, 0XEE, 0XDD, 0X81, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X80, 0X32, 0XA8, 0XFF };
@@ -436,7 +533,7 @@ namespace AnimalCtrl
         {
             //PortRecTextBox.Refresh();
         }
-        
-        
+
+
     }
 }

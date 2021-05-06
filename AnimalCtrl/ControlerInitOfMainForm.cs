@@ -153,19 +153,58 @@ namespace AnimalCtrl
         //LED初始化
         public void MyLedControlInit()
         {
-            CtrlMyLedStatus(false);
+            CtrlMyLedStatus(false, true);
         }
         //控制所有Led状态
-        public void CtrlMyLedStatus(bool ledStatus)
+        public void CtrlMyLedStatus(bool ledStatus, bool isAll)
         {
-            myLedControl1.LedStatus = ledStatus;
-            myLedControl2.LedStatus = ledStatus;
-            myLedControl3.LedStatus = ledStatus;
-            myLedControl4.LedStatus = ledStatus;
-            myLedControl5.LedStatus = ledStatus;
-            myLedControl6.LedStatus = ledStatus;
-            myLedControl7.LedStatus = ledStatus;
-            myLedControl8.LedStatus = ledStatus;
+            if (isAll == true)
+            {
+                myLedControl1.LedStatus = ledStatus;
+                myLedControl2.LedStatus = ledStatus;
+                myLedControl3.LedStatus = ledStatus;
+                myLedControl4.LedStatus = ledStatus;
+                myLedControl5.LedStatus = ledStatus;
+                myLedControl6.LedStatus = ledStatus;
+                myLedControl7.LedStatus = ledStatus;
+                myLedControl8.LedStatus = ledStatus;
+            }
+            else
+            {
+
+            }
+        }
+
+        public void CtrlMyLedStatus(bool ledStatus, int devNum)
+        {
+            switch (devNum)
+            {
+                case 1:
+                    myLedControl1.LedStatus = ledStatus;
+                    break;
+                case 2:
+                    myLedControl2.LedStatus = ledStatus;
+                    break;
+                case 3:
+                    myLedControl3.LedStatus = ledStatus;
+                    break;
+                case 4:
+                    myLedControl4.LedStatus = ledStatus;
+                    break;
+                case 5:
+                    myLedControl5.LedStatus = ledStatus;
+                    break;
+                case 6:
+                    myLedControl6.LedStatus = ledStatus;
+                    break;
+                case 7:
+                    myLedControl7.LedStatus = ledStatus;
+                    break;
+                case 8:
+                    myLedControl8.LedStatus = ledStatus;
+                    break;
+            }
+
         }
 
         //各种定时器初始化

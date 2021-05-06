@@ -277,6 +277,7 @@ namespace AnimalCtrl
                     serialPort.Open();
                     //打开串口后设置将不再有效
                     //串口关闭时设置有效
+                    
                     PortChoose.Enabled = true;
                     BandRate.Enabled = true;
                     DataBit.Enabled = true;
@@ -306,6 +307,7 @@ namespace AnimalCtrl
                 //serialPort.Close();//关闭串口
                 serialPort.Dispose();
                 //串口关闭时设置有效
+                OpenClosePortButton.Enabled = true;
                 PortChoose.Enabled = true;
                 BandRate.Enabled = true;
                 DataBit.Enabled = true;
@@ -400,8 +402,10 @@ namespace AnimalCtrl
                     {
                         return;
                     }
-                    try
-                    {
+
+
+                   // try
+                   // {
                         int count = serialPort.BytesToRead; //缓冲区读入数据的数量
                         byte[] buf = new byte [count];   
                         serialPort.Read(buf, 0, count);
@@ -422,7 +426,7 @@ namespace AnimalCtrl
                                 if (serialFramesCheckBit != ReceiveBytes[serialFramesLen - 1])//判断帧尾
                                 {
                                     serialBuffer.RemoveRange(0, serialFramesLen);
-                                    MessageBox.Show("数据包长度不正确！");
+                                    //MessageBox.Show("数据包长度不正确！");
                                     continue;
                                 }
 
@@ -431,20 +435,20 @@ namespace AnimalCtrl
                                 if (!isDataCheckBitSuccess(ReceiveBytes))
                                 {
                                     serialBuffer.RemoveRange(0, serialFramesLen);
-                                    MessageBox.Show("数据内容不正确！");
+                                    //MessageBox.Show("数据内容不正确！");
                                     continue;
                                 }
 
                                 //receiveBytes 就是完整可用的一帧数据包
                                 //接下来处理收到的数据
-                                try
-                                {
-                                    HandleRecBuff(ReceiveBytes);
-                                }
-                                catch {
-                                    MessageBox.Show("数据处理异常！");
-                                }
-
+                                //try
+                                //{
+                                //    HandleRecBuff(ReceiveBytes);
+                                //}
+                                //catch {
+                                //    MessageBox.Show("数据处理异常！");
+                                //}
+                                HandleRecBuff(ReceiveBytes);
                                 //注释语句为调试时使用
                                 //str = ByteToString(ReceiveBytes);
                                 //PortRecTextBox.Text += string.Format("{0}\r\n", dateTimeNow);
@@ -460,12 +464,12 @@ namespace AnimalCtrl
                         }
                         DelayMs(10);
                        
-                    }
-                    catch (System.Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "Error");
-                        PortRecTextBox.Text = "";//清空
-                    }
+                    //}
+                    //catch (System.Exception ex)
+                    //{
+                    //    MessageBox.Show(ex.Message, "Error");
+                    //    PortRecTextBox.Text = " ";//清空
+                    //}
                 }
             }
             else
@@ -473,7 +477,7 @@ namespace AnimalCtrl
                 MessageBox.Show("请打开某个串口", "错误提示");
             }
         }
-
+        
         //数据位中的检验位判断
         public bool isDataCheckBitSuccess(byte[] ReceiveBytes)
         {
@@ -499,34 +503,80 @@ namespace AnimalCtrl
             }
             
         }
+
+        /// <summary>
+        /// 取时间戳，高并发情况下会有重复。想要解决这问题请使用sleep线程睡眠1毫秒。
+        /// </summary>
+        /// <param name="AccurateToMilliseconds">精确到毫秒</param>
+        /// <returns>返回一个长整数时间戳</returns>
+        /// 
+        public long GetTimeStamp(bool AccurateToMilliseconds = false)
+        {
+            if (AccurateToMilliseconds)
+            {
+
+                // 使用当前时间计时周期数（636662920472315179）减去1970年01月01日计时周期数（621355968000000000）除去（删掉）后面4位计数（后四位计时单位小于毫秒，快到不要不要）再取整（去小数点）。
+
+                //备注：DateTime.Now.ToUniversalTime不能缩写成DateTime.Now.Ticks，会有好几个小时的误差。
+
+                //621355968000000000计算方法 long ticks = (new DateTime(1970, 1, 1, 8, 0, 0)).ToUniversalTime().Ticks;
+
+                return (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000;
+
+            }
+            else
+            {
+                //上面是精确到毫秒，需要在最后除去（10000），这里只精确到秒，只要在10000后面加三个0即可（1秒等于1000毫米）。
+                return (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000;
+            }
+        }
+
+        public long[]heartDataTimeTemp = {0, 0, 0, 0, 0, 0, 0, 0};
+
         //判断设备编号 并且做相应的操作
-        public void HeartDecideDiviceNum(byte numBit)
+        public void HeartDecideDiviceNum(byte numBit, bool ledStatus)
         {
             switch (numBit)
             {
                 case 0X80:
-                    myLedControl1.LedStatus = true;
+                    myLedControl1.LedStatus = ledStatus;
+                    heartDataTimeTemp[0] = GetTimeStamp(false);
+                    RageHeartSignal.Enabled = true;
                     break;
                 case 0X40:
-                    myLedControl2.LedStatus = true;
+                    myLedControl2.LedStatus = ledStatus;
+                    heartDataTimeTemp[1] = GetTimeStamp(false);
+                    RageHeartSignal.Enabled = true;
                     break;
                 case 0X20:
-                    myLedControl3.LedStatus = true;
+                    myLedControl3.LedStatus = ledStatus;
+                    heartDataTimeTemp[2] = GetTimeStamp(false);
+                    RageHeartSignal.Enabled = true;
                     break;
                 case 0X10:
-                    myLedControl4.LedStatus = true;
+                    myLedControl4.LedStatus = ledStatus;
+                    heartDataTimeTemp[3] = GetTimeStamp(false);
+                    RageHeartSignal.Enabled = true;
                     break;
                 case 0X08:
-                    myLedControl5.LedStatus = true;
+                    myLedControl5.LedStatus = ledStatus;
+                    heartDataTimeTemp[4] = GetTimeStamp(false);
+                    RageHeartSignal.Enabled = true;
                     break;
                 case 0X04:
-                    myLedControl6.LedStatus = true;
+                    myLedControl6.LedStatus = ledStatus;
+                    heartDataTimeTemp[5] = GetTimeStamp(false);
+                    RageHeartSignal.Enabled = true;
                     break;
                 case 0X02:
-                    myLedControl7.LedStatus = true;
+                    myLedControl7.LedStatus = ledStatus;
+                    heartDataTimeTemp[6] = GetTimeStamp(false);
+                    RageHeartSignal.Enabled = true;
                     break;
                 case 0X01:
-                    myLedControl8.LedStatus = true;
+                    myLedControl8.LedStatus = ledStatus;
+                    heartDataTimeTemp[7] = GetTimeStamp(false);
+                    RageHeartSignal.Enabled = true;
                     break;
 
             }
@@ -618,14 +668,15 @@ namespace AnimalCtrl
             if (ReceiveBytes[2] == 0XCC) //判断返回心跳
             {
                 byte tempBit = ReceiveBytes[12];
-                HeartDecideDiviceNum(tempBit);
+                HeartDecideDiviceNum(tempBit, true);
             }
+
             else if (ReceiveBytes[2] == 0XDD) //判断返回刺激成功
             {
                 StimulateSuccessMessageHandle(ReceiveBytes, ref stimuSuccessMessage);
                 PortRecTextBox.AppendText(stimuSuccessMessage);
-                
             }
+
             //如果再添加其他协议功能 就在此处添加即可
         }
 
