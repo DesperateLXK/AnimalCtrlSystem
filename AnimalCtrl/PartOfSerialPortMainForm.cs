@@ -801,6 +801,7 @@ namespace AnimalCtrl
                     UpdateStimTimesBit(serialSendData1, stimulateTimes);//更新发送编号
                     UpdataCheckBit(serialSendData1);//更新校验位
                     serialPort.Write(serialSendData1, 0, serialSendData1.Length);//发送数据
+                    DelayMs(30);
                 }
                 if (IsOpenCheckBoxNum2.Checked == true)
                 {
@@ -816,6 +817,7 @@ namespace AnimalCtrl
                     UpdateStimTimesBit(serialSendData2, stimulateTimes);//更新发送编号
                     UpdataCheckBit(serialSendData2);
                     serialPort.Write(serialSendData2, 0, serialSendData2.Length);
+                    DelayMs(30);
                 }
                 if (IsOpenCheckBoxNum3.Checked == true)
                 {
@@ -832,6 +834,7 @@ namespace AnimalCtrl
                     UpdateStimTimesBit(serialSendData3, stimulateTimes);//更新发送编号
                     UpdataCheckBit(serialSendData3);
                     serialPort.Write(serialSendData3, 0, serialSendData3.Length);
+                    DelayMs(30);
                 }
                 if (IsOpenCheckBoxNum4.Checked == true)
                 {
@@ -847,6 +850,7 @@ namespace AnimalCtrl
                     UpdateStimTimesBit(serialSendData4, stimulateTimes);//更新发送编号
                     UpdataCheckBit(serialSendData4);
                     serialPort.Write(serialSendData4, 0, serialSendData4.Length);
+                    DelayMs(30);
                 }
 
                 stimulateTimes++;

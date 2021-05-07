@@ -1367,9 +1367,9 @@
             this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label24.MaximumSize = new System.Drawing.Size(225, 0);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(186, 40);
+            this.label24.Size = new System.Drawing.Size(195, 40);
             this.label24.TabIndex = 0;
-            this.label24.Text = "Release Date: 2021.4.15 Version: 1.4.1";
+            this.label24.Text = "Release Date: 2021.05.06 Version: 1.4.2";
             // 
             // label16
             // 
@@ -1945,7 +1945,7 @@
             this.MinimumSize = new System.Drawing.Size(1490, 1010);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "动物群体控制系统V1.4.1";
+            this.Text = "动物群体控制系统V1.4.2";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.groupBox1.ResumeLayout(false);
